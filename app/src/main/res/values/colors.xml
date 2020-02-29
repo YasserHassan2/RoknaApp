@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fdef96</color>
+    <color name="colorPrimaryDark">#f7b71d</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="btn_brown">#db733a</color>
+    <color name="alpha_total">#AA000000</color>
+    <color name="bg_login">#26ae90</color>
+    <color name="bg_register">#2e3237</color>
+    <color name="bg_main">#428bca</color>
+    <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
+    <color name="black">#000000</color>
+    <color name="input_login">#222222</color>
+    <color name="input_login_hint">#999999</color>
+    <color name="input_register">#888888</color>
+    <color name="input_register_bg">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login">#26ae90</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+    <color name="btn_logut_bg">#ff6861</color>
+    <color name="yellow">#eac100</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="alphaG">#aa26ae90</color>
+    <color name="AlphaR">#aaff6861</color>
+    <color name="oAlpha">#bfaf7ac0</color>
+    <color name="yelloAlpha">#9eeec64d</color>
+    <color name="darkYelloAlpha">#deb948</color>
+    <color name="btn_brwnlight">#e59d74</color>
+    <color name="brAlp">#abdb733a</color>
+    <color name="add">#acdb733a</color>
+    <color name="overlay_primeary">#aafdef96</color>
+
+    <color name="overlay_white">#aaffffff</color>
+</resources>
