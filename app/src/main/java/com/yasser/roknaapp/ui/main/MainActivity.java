@@ -27,11 +27,12 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    CardView cvProducts;
+    CardView cvProducts,cvWorkshops,cvEvents;
     ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
     ImageSlider imageSlider;
     ArrayList<AdBanner> adBanners = new ArrayList<AdBanner>();
     DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+    private final int NETWORK_CONNECTIVTY_LENGTH = 2000;
 
 
     @Override
@@ -44,10 +45,30 @@ public class MainActivity extends AppCompatActivity {
         imageSlider = findViewById(R.id.image_slider);
 
         cvProducts = findViewById(R.id.cv_product);
+        cvWorkshops = findViewById(R.id.cv_workshops);
+        cvEvents = findViewById(R.id.cv_Events);
+
         cvProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,ListsActivity.class);
+                intent.putExtra("loadLists",1);
+                startActivity(intent);
+            }
+        });
+        cvWorkshops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,ListsActivity.class);
+                intent.putExtra("loadLists",2);
+                startActivity(intent);
+            }
+        });
+        cvEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,ListsActivity.class);
+                intent.putExtra("loadLists",3);
                 startActivity(intent);
             }
         });

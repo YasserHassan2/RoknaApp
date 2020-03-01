@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.yasser.roknaapp"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -47,4 +47,6 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.5.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+
+
 }

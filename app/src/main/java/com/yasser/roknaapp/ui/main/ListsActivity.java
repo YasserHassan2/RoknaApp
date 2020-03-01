@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -26,7 +28,8 @@ import java.util.List;
 public class ListsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseHelper databaseHelper;
-
+    int loadList;
+    Intent getData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +37,26 @@ public class ListsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.Pr_recyclerView);
 
         databaseHelper = new DatabaseHelper(ListsActivity.this);
+        getData = getIntent();
+        loadList=getData.getIntExtra("loadLists",-1);
         databaseHelper.connectToDB();
-        databaseHelper.loadProducts(recyclerView);
+
+        switch (loadList){
+
+            case 1:
+                databaseHelper.loadProducts(recyclerView);
+                break;
+            case 2:
+                databaseHelper.loadWorkshops(recyclerView);
+                break;
+            case 3:
+                databaseHelper.loadEvents(recyclerView);
+                break;
+                default:
+                    databaseHelper.loadProducts(recyclerView);
+
+        }
+
 
 
 

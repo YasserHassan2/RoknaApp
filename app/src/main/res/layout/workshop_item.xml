@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="15dp"
+    app:cardPreventCornerOverlap="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/workshop_image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/roknalogo"
+        ></ImageView>
+    <TextView
+        android:id="@+id/workshop_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="هانعمل مع بعض كذااااااااااااااااااا"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        ></TextView>
+    <TextView
+        android:id="@+id/workshopDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:fontFamily="sans-serif"
+        android:text="عليقه مفاتيح و برواز و مكان للورق"
+        android:textColor="#000000"
+        android:textSize="13dp"></TextView>
+
+    <TextView
+        android:id="@+id/workshopPrice"
+        android:layout_width="120dp"
+        android:layout_gravity="center"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:background="@drawable/grd_back"
+        android:gravity="center"
+        android:text="150 EGP"
+        android:textColor="@color/black"
+        android:textSize="16dp"></TextView>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="horizontal">
+     <Button
+         android:id="@+id/btn_location"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@color/red"
+         android:text="Location"
+         android:layout_margin="5dp"
+
+         android:layout_weight="1"
+         android:layout_gravity="center_horizontal"
+         android:fontFamily="sans-serif-condensed-medium"
+         android:textColor="@color/white"
+         ></Button>
+     <Button
+         android:id="@+id/btn_booknow"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:background="@color/green"
+     android:text="Book now"
+     android:visibility="visible"
+     android:layout_weight="1"
+     android:layout_margin="5dp"
+     android:layout_gravity="center_horizontal"
+     android:fontFamily="sans-serif-condensed-medium"
+     android:textColor="@color/white"
+     ></Button>
+ </LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
