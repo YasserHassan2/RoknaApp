@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:layout_marginTop="5dp"
+    app:cardCornerRadius="15dp"
+    app:cardPreventCornerOverlap="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:gravity="end"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/eventTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="5dp"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="معرض الكتــــاب"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_eventDates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:textColor="@color/black"
+                android:text="المواعيــد : "
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eventTitle" />
+
+            <Button
+                android:id="@+id/btn_Event_location"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/red"
+                android:text="Location"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_eventDates" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/eventImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/roknalogo"
+        android:padding="5dp"
+        ></de.hdodenhof.circleimageview.CircleImageView>
+
+
 </LinearLayout>
+</androidx.cardview.widget.CardView>

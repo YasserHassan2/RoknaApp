@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RoknaApp</string>
+
+    <string name="roknaApp">Rokna</string>
+    <string name="Description">Rokna</string>
+    <string name="greencolor">#21825C</string>
+
 </resources>

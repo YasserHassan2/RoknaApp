@@ -3,37 +3,45 @@ package com.yasser.roknaapp.Model;
 import com.parse.ParseGeoPoint;
 
 public class Event {
+    String eventTitle,eventDates,eventImageURL;
+    ParseGeoPoint eventLocation;
 
-    String image,description;
-    ParseGeoPoint location;
-
-    public Event(String image, String description, ParseGeoPoint location) {
-        this.image = image;
-        this.description = description;
-        this.location = location;
+    public Event(String eventTitle, String eventDates, String eventImageURL, ParseGeoPoint eventLocation) {
+        this.eventTitle = eventTitle;
+        this.eventDates = eventDates;
+        this.eventImageURL = eventImageURL;
+        this.eventLocation = eventLocation;
     }
 
-    public String getImage() {
-        return image;
+    public String getEventTitle() {
+        return eventTitle;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
     }
 
-    public String getDescription() {
-        return description;
+    public String getEventDates() {
+        return eventDates;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEventDates(String eventDates) {
+        this.eventDates = eventDates;
     }
 
-    public ParseGeoPoint getLocation() {
-        return location;
+    public String getEventImageURL() {
+        return eventImageURL;
     }
 
-    public void setLocation(ParseGeoPoint location) {
-        this.location = location;
+    public void setEventImageURL(String eventImageURL) {
+        this.eventImageURL = eventImageURL;
+    }
+
+    public ParseGeoPoint getEventLocation() {
+        return eventLocation;
+    }
+
+    public void setEventLocation(ParseGeoPoint eventLocation) {
+        this.eventLocation = eventLocation;
     }
 }

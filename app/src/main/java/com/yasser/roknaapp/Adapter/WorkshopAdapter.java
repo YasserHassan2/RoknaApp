@@ -62,7 +62,7 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.Recycl
 
         holder.workshopTitle.setText(workshopList.get(position).getTitle());
         holder.workshopDesc.setText(workshopList.get(position).getDescription());
-        holder.Workshopprice.setText(workshopList.get(position).getPrice() + " EGP");
+        holder.Workshopprice.setText(workshopList.get(position).getPrice() + " per person");
 
     }
 

@@ -9,8 +9,6 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.labters.lottiealertdialoglibrary.DialogTypes;
-import com.labters.lottiealertdialoglibrary.LottieAlertDialog;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -18,11 +16,16 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
 import com.yasser.roknaapp.Adapter.EventsAdapter;
 import com.yasser.roknaapp.Adapter.ProductAdapter;
 import com.yasser.roknaapp.Adapter.WorkshopAdapter;
+import com.yasser.roknaapp.Dialog;
+import com.yasser.roknaapp.R;
 import com.yasser.roknaapp.ui.main.ListsActivity;
+import com.yasser.roknaapp.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +34,7 @@ public class DatabaseHelper {
 
     Context mContext;
 
-    LottieAlertDialog lottieAlertDialog;
-    ArrayList<Product> productList = new ArrayList<Product>();
+
     ArrayList<Event> eventList = new ArrayList<Event>();
     ArrayList<Workshop> workshopsList = new ArrayList<Workshop>();
 
@@ -52,54 +54,7 @@ public class DatabaseHelper {
 
     }
 
-    public void loadProducts(final RecyclerView recyclerView) {
 
-
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("products");
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, final ParseException e) {
-                if (e == null) {
-                    for (ParseObject o : objects) {
-
-                        String pr_id = o.getObjectId();
-                        String prName = o.getString("name");
-                        String prDesc = o.getString("description");
-                        String prPrice = o.getString("price");
-                        String prSale = o.getString("sale");
-
-                        ParseFile imageFile = o.getParseFile("image");
-                        String imageURL = imageFile.getUrl();
-
-
-                        Product product = new Product(prName, prDesc, prPrice, prSale, imageURL);
-                        productList.add(product);
-
-                    }
-
-                    recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
-                    ProductAdapter RecyclerViewAdapter = new ProductAdapter(mContext, productList);
-
-                    recyclerView.setAdapter(RecyclerViewAdapter);
-
-                    RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-
-
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(mContext, "error= " + e, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-    }
 
     public void loadWorkshops(final RecyclerView recyclerView) {
 
@@ -160,14 +115,15 @@ public class DatabaseHelper {
                     for (ParseObject o : objects) {
 
                         String event_id = o.getObjectId();
-                        String eventDesc = o.getString("description");
+                        String eventTitle = o.getString("title");
+                        String eventDates = o.getString("dates");
                         ParseGeoPoint location = o.getParseGeoPoint("location");
 
                         ParseFile imageFile = o.getParseFile("image");
                         String imageURL = imageFile.getUrl();
 
 
-                        Event event = new Event(imageURL, eventDesc, location);
+                        Event event = new Event(eventTitle,eventDates,imageURL,location);
                         eventList.add(event);
 
                     }
@@ -191,6 +147,11 @@ public class DatabaseHelper {
                 }
             }
         });
+
+    }
+
+    public void showFeedbackDialog(String title)
+    {
 
     }
 

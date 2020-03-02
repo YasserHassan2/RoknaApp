@@ -42,24 +42,25 @@
 
     <TextView
         android:id="@+id/workshopPrice"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_height="50dp"
+        android:layout_height="25dp"
         android:layout_margin="5dp"
         android:fontFamily="sans-serif-smallcaps"
         android:background="@drawable/grd_back"
         android:gravity="center"
-        android:text="150 EGP"
+        android:text="150"
         android:textColor="@color/black"
         android:textSize="16dp"></TextView>
  <LinearLayout
      android:layout_width="match_parent"
-     android:layout_height="wrap_content"
+     android:layout_height="35dp"
+     android:layout_margin="5dp"
      android:orientation="horizontal">
      <Button
          android:id="@+id/btn_location"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
+         android:layout_width="120dp"
+         android:layout_height="35dp"
          android:background="@color/red"
          android:text="Location"
          android:layout_margin="5dp"
@@ -71,8 +72,8 @@
          ></Button>
      <Button
          android:id="@+id/btn_booknow"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
+         android:layout_width="120dp"
+         android:layout_height="35dp"
      android:background="@color/green"
      android:text="Book now"
      android:visibility="visible"

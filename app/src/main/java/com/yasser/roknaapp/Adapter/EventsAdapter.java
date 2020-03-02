@@ -1,11 +1,15 @@
 package com.yasser.roknaapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +51,16 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
     @Override
     public void onBindViewHolder(EventsViewHolder holder, int position) {
 
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.roknalogo);
+
+        Glide.with(context)
+                .load(eventList.get(position).getEventImageURL())
+                .apply(requestOptions)
+                .into(holder.eventImage);
+
+        holder.tv_eventTitle.setText(eventList.get(position).getEventTitle());
+        holder.tv_eventDates.setText(eventList.get(position).getEventDates());
 
     }
 
@@ -63,6 +77,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
     }
 
     public class EventsViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView eventImage;
+        TextView tv_eventTitle,tv_eventDates;
+        Button btn_location;
         public int position = 0;
         /**
          * this class contains onclick listener for the recylcer view home
@@ -70,8 +88,27 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
 
         public EventsViewHolder(View itemView) {
             super(itemView);
+           eventImage= itemView.findViewById(R.id.eventImage);
+           tv_eventTitle = itemView.findViewById(R.id.eventTitle);
+           tv_eventDates = itemView.findViewById(R.id.tv_eventDates);
+           btn_location = itemView.findViewById(R.id.btn_Event_location);
 
 
+            btn_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri.Builder directionsBuilder = new Uri.Builder()
+                            .scheme("https")
+                            .authority("www.google.com")
+                            .appendPath("maps")
+                            .appendPath("dir")
+                            .appendPath("")
+                            .appendQueryParameter("api", "1")
+                            .appendQueryParameter("destination", eventList.get(getAdapterPosition()).getEventLocation().getLatitude() + "," + eventList.get(getAdapterPosition()).getEventLocation().getLongitude());
+                    Toast.makeText(context, "Finiding Best Route", Toast.LENGTH_SHORT).show();
+                    context.startActivity(new Intent(Intent.ACTION_VIEW, directionsBuilder.build()));
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

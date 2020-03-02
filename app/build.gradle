@@ -49,4 +49,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
 
 
+    //gif dialog
+    implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.2'
+
+
 }

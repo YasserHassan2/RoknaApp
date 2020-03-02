@@ -10,14 +10,18 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
+import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.ui.main.MainActivity;
 
 public class Splash extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 4000;
     ImageView iv_viewMe_logo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +52,29 @@ public class Splash extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (! (cm.getActiveNetworkInfo() != null)) {
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setMessage("No Network Connection, Please Connect to internet and try again.");
-            builder1.setCancelable(true);
-
-            builder1.setPositiveButton(
-                    "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            finish();
+            new FancyGifDialog.Builder(Splash.this)
+                    .setTitle("No Internet")
+                    .setMessage("Please Check Internet Connectavity and try again..")
+                    .setNegativeBtnText("Cancel")
+                    .setPositiveBtnBackground("#FF4081")
+                    .setPositiveBtnText("Ok")
+                    .setNegativeBtnBackground("#FFA9A7A8")
+                    .setGifResource(R.drawable.gif1)   //Pass your Gif here
+                    .isCancellable(true)
+                    .OnPositiveClicked(new FancyGifDialogListener() {
+                        @Override
+                        public void OnClick() {
+                          finish();
                         }
-                    });
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+                    })
+                    .OnNegativeClicked(new FancyGifDialogListener() {
+                        @Override
+                        public void OnClick() {
+                         finish();
+                        }
+                    })
+                    .build();
+
         }
         return true;
     }
