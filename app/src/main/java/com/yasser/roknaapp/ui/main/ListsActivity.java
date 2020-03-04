@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
@@ -38,6 +40,7 @@ public class ListsActivity extends AppCompatActivity {
     ArrayList<Product> productList = new ArrayList<Product>();
     int loadList;
     Intent getData;
+    CatLoadingView mView;
     String colorStr="";
     String contact = "+20 1129759853"; // use country code with your phone number
     @Override
@@ -77,6 +80,9 @@ public class ListsActivity extends AppCompatActivity {
     }
     public void loadProducts(final RecyclerView recyclerView) {
 
+        mView = new CatLoadingView();
+        mView.setCanceledOnTouchOutside(false);
+        mView.show(getSupportFragmentManager(),"");
 
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("products");
@@ -101,7 +107,7 @@ public class ListsActivity extends AppCompatActivity {
                         productList.add(product);
 
                     }
-
+                    mView.dismiss();
                     recyclerView.setLayoutManager(new LinearLayoutManager(ListsActivity.this));
 
                     ProductAdapter RecyclerViewAdapter = new ProductAdapter(ListsActivity.this, productList);
@@ -113,7 +119,7 @@ public class ListsActivity extends AppCompatActivity {
                         public void onItemClick(View view, int position) {
                             new FancyGifDialog.Builder(ListsActivity.this)
                                     .setTitle("Contact To Order")
-                                    .setMessage("Want This, please Contact to deliver")
+                                    .setMessage("Want '"+productList.get(position).getName()+"' , please Contact to deliver")
                                     .setNegativeBtnText("Cancel")
                                     .setPositiveBtnBackground(colorStr)
                                     .setPositiveBtnText("Contact")
@@ -133,7 +139,6 @@ public class ListsActivity extends AppCompatActivity {
                                                 startActivity(i);
                                             } catch (PackageManager.NameNotFoundException e) {
                                                 Toast.makeText(ListsActivity.this, "Whatsapp app not installed in your phone", Toast.LENGTH_LONG).show();
-                                                e.printStackTrace();
                                             }
                                         }
                                     })
@@ -148,6 +153,7 @@ public class ListsActivity extends AppCompatActivity {
                     });
 
                 } else {
+                    mView.dismiss();
                     Toast.makeText(ListsActivity.this, "error= " + e, Toast.LENGTH_LONG).show();
                 }
             }

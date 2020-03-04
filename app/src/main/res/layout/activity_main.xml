@@ -7,6 +7,19 @@
     android:orientation="vertical"
     tools:context=".ui.main.MainActivity">
 
+  <TextView
+      android:id="@+id/tv_promoCode"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:text="Your Promo code\n12351"
+      android:gravity="center"
+      android:textColor="@color/white"
+      android:textSize="20dp"
+      android:visibility="gone"
+      android:fontFamily="sans-serif-smallcaps"
+      android:background="@color/colorPrimaryDark"
+      ></TextView>
+
     <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/image_slider"
         android:layout_width="match_parent"

@@ -52,5 +52,7 @@ dependencies {
     //gif dialog
     implementation 'com.github.Shashank02051997:FancyGifDialog-Android:1.2'
 
+    implementation 'com.roger.catloadinglibrary:catloadinglibrary:1.0.4'
+
 
 }

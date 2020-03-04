@@ -16,6 +16,7 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
@@ -33,6 +34,8 @@ import java.util.List;
 public class DatabaseHelper {
 
     Context mContext;
+    CatLoadingView  mView;
+    Dialog dialog;
 
 
     ArrayList<Event> eventList = new ArrayList<Event>();
@@ -40,6 +43,7 @@ public class DatabaseHelper {
 
     public DatabaseHelper(Context mContext) {
         this.mContext = mContext;
+        dialog = new Dialog(mContext);
     }
 
     public void connectToDB() {
@@ -57,7 +61,7 @@ public class DatabaseHelper {
 
 
     public void loadWorkshops(final RecyclerView recyclerView) {
-
+        dialog.showProgressDialog("Loading","Getting Workshops data..");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("workshops");
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -81,6 +85,7 @@ public class DatabaseHelper {
                         workshopsList.add(workshop);
 
                     }
+                    dialog.stopDialog();
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -98,6 +103,7 @@ public class DatabaseHelper {
 
                 } else {
                     Toast.makeText(mContext, "error= " + e, Toast.LENGTH_LONG).show();
+                    dialog.stopDialog();
                 }
             }
         });
@@ -105,7 +111,7 @@ public class DatabaseHelper {
     }
 
     public void loadEvents(final RecyclerView recyclerView) {
-
+        dialog.showProgressDialog("Loading","Getting Events data..");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -127,7 +133,7 @@ public class DatabaseHelper {
                         eventList.add(event);
 
                     }
-
+                    dialog.stopDialog();
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
                     EventsAdapter RecyclerViewAdapter = new EventsAdapter(mContext, eventList);
@@ -144,6 +150,7 @@ public class DatabaseHelper {
 
                 } else {
                     Toast.makeText(mContext, "error= " + e, Toast.LENGTH_LONG).show();
+                    dialog.stopDialog();
                 }
             }
         });
