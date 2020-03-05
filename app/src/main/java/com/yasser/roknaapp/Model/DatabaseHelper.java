@@ -85,6 +85,7 @@ public class DatabaseHelper {
                         workshopsList.add(workshop);
 
                     }
+
                     dialog.stopDialog();
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -92,6 +93,11 @@ public class DatabaseHelper {
                     WorkshopAdapter RecyclerViewAdapter = new WorkshopAdapter(mContext, workshopsList);
 
                     recyclerView.setAdapter(RecyclerViewAdapter);
+
+                    if (workshopsList.isEmpty()) {
+                        dialog.showAlertDialogToMain("No Workshop Avaliable at moment, stay tuned!");
+
+                    }
 
                     RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
                         @Override
@@ -109,6 +115,7 @@ public class DatabaseHelper {
         });
 
     }
+
 
     public void loadEvents(final RecyclerView recyclerView) {
         dialog.showProgressDialog("Loading","Getting Events data..");
@@ -135,7 +142,10 @@ public class DatabaseHelper {
                     }
                     dialog.stopDialog();
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                    if (eventList.isEmpty()) {
+                        dialog.showAlertDialogToMain("No Events Avaliable at moment, stay tuned!");
 
+                    }
                     EventsAdapter RecyclerViewAdapter = new EventsAdapter(mContext, eventList);
 
                     recyclerView.setAdapter(RecyclerViewAdapter);

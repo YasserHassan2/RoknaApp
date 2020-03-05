@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
 import com.yasser.roknaapp.Adapter.ProductAdapter;
+import com.yasser.roknaapp.Dialog;
 import com.yasser.roknaapp.Model.DatabaseHelper;
 import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.R;
@@ -32,6 +34,8 @@ import com.yasser.roknaapp.Splash;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.yasser.roknaapp.ui.main.MainActivity.promoCode;
 
 public class ListsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -41,7 +45,10 @@ public class ListsActivity extends AppCompatActivity {
     int loadList;
     Intent getData;
     CatLoadingView mView;
+    Dialog dialog;
     String colorStr="";
+    MainActivity mainActivity;
+    TextView tv_promoCode;
     String contact = "+20 1129759853"; // use country code with your phone number
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,19 @@ public class ListsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.Pr_recyclerView);
         tv_PageTitle = findViewById(R.id.tv_title);
         colorStr = getResources().getString(R.string.greencolor);
+        dialog = new Dialog(ListsActivity.this);
+        tv_promoCode = findViewById(R.id.tv_promoCode);
+        mainActivity = new MainActivity();
+
+
+        if (promoCode!=-1)
+        {
+            tv_promoCode.setText("Your Promo Code\n"+promoCode+"\nUse This When Order a Product");
+            tv_promoCode.setVisibility(View.VISIBLE);
+        }
+
+
+
 
         databaseHelper = new DatabaseHelper(ListsActivity.this);
         getData = getIntent();
@@ -113,7 +133,10 @@ public class ListsActivity extends AppCompatActivity {
                     ProductAdapter RecyclerViewAdapter = new ProductAdapter(ListsActivity.this, productList);
 
                     recyclerView.setAdapter(RecyclerViewAdapter);
+                    if (productList.isEmpty()) {
+                        dialog.showAlertDialogToMain("No Products Avaliable at moment, stay tuned!");
 
+                    }
                     RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
