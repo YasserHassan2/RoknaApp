@@ -27,9 +27,11 @@ import com.yasser.roknaapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import mehdi.sakout.aboutpage.AboutPage;
+
 
 public class MainActivity extends AppCompatActivity {
-    CardView cvProducts,cvWorkshops,cvEvents;
+    CardView cvProducts,cvWorkshops,cvEvents,cvAbout_us;
     ArrayList<SlideModel> imageList = new ArrayList<SlideModel>();
     ImageSlider imageSlider;
     ArrayList<AdBanner> adBanners = new ArrayList<AdBanner>();
@@ -53,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
         cvProducts = findViewById(R.id.cv_product);
         cvWorkshops = findViewById(R.id.cv_workshops);
         cvEvents = findViewById(R.id.cv_Events);
+        cvAbout_us = findViewById(R.id.cv_aboutUs);
         tv_promoCode = findViewById(R.id.tv_promoCode);
+
 
        promoCode = getPromoIntent.getIntExtra("promo_code",-1);
 
@@ -88,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,ListsActivity.class);
                 intent.putExtra("loadLists",3);
+                startActivity(intent);
+            }
+        });
+        cvAbout_us.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,AboutUsActivity.class);
                 startActivity(intent);
             }
         });
