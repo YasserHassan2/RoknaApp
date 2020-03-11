@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -182,6 +183,10 @@ public class ListsActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+    finish();
     }
 
 }
