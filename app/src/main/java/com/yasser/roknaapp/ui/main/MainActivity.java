@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (promoCode!=-1)
         {
             tv_promoCode.setText("Your Promo Code\n"+promoCode+"\nUse This When Order a Product");
-            tv_promoCode.setVisibility(View.VISIBLE);
+            tv_promoCode.setVisibility(View.GONE);
         }
 
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         cvProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,ListsActivity.class);
+                Intent intent = new Intent(MainActivity.this,ProductCategoryActivity.class);
                 intent.putExtra("loadLists",1);
                 startActivity(intent);
             }
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     mView.dismiss();
-                    imageSlider.setImageList(imageList,true);
+                    imageSlider.setImageList(imageList,false);
 
                     imageSlider.setItemClickListener(new ItemClickListener() {
                         @Override

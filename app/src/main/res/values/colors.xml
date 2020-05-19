@@ -20,7 +20,10 @@
     <color name="input_register_hint">#5e6266</color>
     <color name="btn_login">#26ae90</color>
     <color name="btn_login_bg">#eceef1</color>
+    <color name="dark_white">#f5f5f5</color>
     <color name="lbl_name">#333333</color>
+    <color name="trkwaz">#147B9A</color>
+    <color name="trkwazfat7">#24A2D1</color>
     <color name="btn_logut_bg">#ff6861</color>
     <color name="green">#21825C</color>
     <color name="yellow">#eac100</color>
@@ -28,6 +31,10 @@
     <color name="alphaG">#aa26ae90</color>
     <color name="AlphaR">#aaff6861</color>
     <color name="oAlpha">#bfaf7ac0</color>
+
+    <color name="move_fat7">#ddd6da</color>
+    <color name="move_3ame2">#bbaeb5</color>
+
     <color name="yelloAlpha">#9eeec64d</color>
     <color name="darkYelloAlpha">#deb948</color>
     <color name="btn_brwnlight">#e59d74</color>

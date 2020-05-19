@@ -5,6 +5,7 @@
     android:layout_margin="5dp"
     android:layout_marginTop="5dp"
     app:cardCornerRadius="15dp"
+    android:background="@color/move_fat7"
     app:cardPreventCornerOverlap="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -22,13 +23,14 @@
         android:layout_margin="5dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="15dp"
+        android:background="@color/move_3ame2"
         app:cardPreventCornerOverlap="true">
 
         <ImageView
             android:id="@+id/pr_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
             android:src="@drawable/splash"></ImageView>
 
         <TextView
@@ -39,6 +41,7 @@
             android:background="@drawable/grd_back"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
+            android:visibility="gone"
             android:text="50% Sale"
             android:textAllCaps="false"
             android:textColor="@color/red"></TextView>
@@ -50,11 +53,13 @@
         android:layout_margin="5dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="15dp"
+        android:background="@color/move_3ame2"
         app:cardPreventCornerOverlap="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView

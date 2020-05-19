@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -39,6 +40,7 @@ import java.util.List;
 import static com.yasser.roknaapp.ui.main.MainActivity.promoCode;
 
 public class ListsActivity extends AppCompatActivity {
+    private static final String TAG ="ListsActvity" ;
     RecyclerView recyclerView;
     DatabaseHelper databaseHelper;
     TextView tv_PageTitle;
@@ -46,6 +48,7 @@ public class ListsActivity extends AppCompatActivity {
     int loadList;
     Intent getData;
     CatLoadingView mView;
+    int product_category_id;
     Dialog dialog;
     String colorStr="";
     MainActivity mainActivity;
@@ -55,6 +58,7 @@ public class ListsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
+
         recyclerView = findViewById(R.id.Pr_recyclerView);
         tv_PageTitle = findViewById(R.id.tv_title);
         colorStr = getResources().getString(R.string.greencolor);
@@ -66,7 +70,7 @@ public class ListsActivity extends AppCompatActivity {
         if (promoCode!=-1)
         {
             tv_promoCode.setText("Your Promo Code\n"+promoCode+"\nUse This When Order a Product");
-            tv_promoCode.setVisibility(View.VISIBLE);
+            tv_promoCode.setVisibility(View.GONE);
         }
 
 
@@ -75,11 +79,15 @@ public class ListsActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(ListsActivity.this);
         getData = getIntent();
         loadList=getData.getIntExtra("loadLists",-1);
+        product_category_id = getData.getIntExtra("cat_id",1);
         databaseHelper.connectToDB();
 
         switch (loadList){
 
             case 1:
+                if (databaseHelper.LOAD_FROM_LOCAL==true)
+                loadProducts(recyclerView);
+                else
                 loadProducts(recyclerView);
                 break;
             case 2:
@@ -100,79 +108,59 @@ public class ListsActivity extends AppCompatActivity {
 
     }
     public void loadProducts(final RecyclerView recyclerView) {
+                        mView = new CatLoadingView();
+                        mView.setCanceledOnTouchOutside(false);
+                        mView.show(getSupportFragmentManager(),"");
+                        final ParseQuery<ParseObject> query = ParseQuery.getQuery("products");
+                        query.whereEqualTo("category_id",product_category_id);
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> objects, final ParseException e) {
+                                if (e == null) {
+                                    for (ParseObject o : objects) {
 
-        mView = new CatLoadingView();
-        mView.setCanceledOnTouchOutside(false);
-        mView.show(getSupportFragmentManager(),"");
+                                        String pr_id = o.getObjectId();
+                                        String prName = o.getString("name");
+                                        String prDesc = o.getString("description");
+                                        String prPrice = o.getString("price");
+                                        String prSale = o.getString("sale");
+
+                                        ParseFile imageFile1 = o.getParseFile("image");
+                                        String imageURL1 = imageFile1.getUrl();
+                                        ParseFile imageFile2 = o.getParseFile("imageURL1");
+                                        String imageURL2 = imageFile2.getUrl();
+                                        ParseFile imageFile3 = o.getParseFile("imageURL2");
+                                        String imageURL3 = imageFile3.getUrl();
+                                        ParseFile imageFile4 = o.getParseFile("imageURL3");
+                                        String imageURL4= imageFile4.getUrl();
 
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("products");
+                                        Product product = new Product(pr_id,prName,prDesc,prPrice,prSale,imageURL1,imageURL2,imageURL3,imageURL4);
+                                        productList.add(product);
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, final ParseException e) {
-                if (e == null) {
-                    for (ParseObject o : objects) {
+                                    }
+                                    mView.dismiss();
+                                    databaseHelper.pinProductsinBackground(productList);
 
-                        String pr_id = o.getObjectId();
-                        String prName = o.getString("name");
-                        String prDesc = o.getString("description");
-                        String prPrice = o.getString("price");
-                        String prSale = o.getString("sale");
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(ListsActivity.this));
 
-                        ParseFile imageFile = o.getParseFile("image");
-                        String imageURL = imageFile.getUrl();
-
-
-                        Product product = new Product(prName, prDesc, prPrice, prSale, imageURL);
-                        productList.add(product);
-
-                    }
-                    mView.dismiss();
-                    recyclerView.setLayoutManager(new LinearLayoutManager(ListsActivity.this));
-
-                    ProductAdapter RecyclerViewAdapter = new ProductAdapter(ListsActivity.this, productList);
+                                    ProductAdapter RecyclerViewAdapter = new ProductAdapter(ListsActivity.this, productList);
 
                     recyclerView.setAdapter(RecyclerViewAdapter);
                     if (productList.isEmpty()) {
-                        dialog.showAlertDialogToMain("No Products Avaliable at moment, stay tuned!");
+                       dialog.showAlertDialogToMain("No Products Avaliable at moment, stay tuned!");
+
 
                     }
                     RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            new FancyGifDialog.Builder(ListsActivity.this)
-                                    .setTitle("Contact To Order")
-                                    .setMessage("Want '"+productList.get(position).getName()+"' , please Contact to deliver")
-                                    .setNegativeBtnText("Cancel")
-                                    .setPositiveBtnBackground(colorStr)
-                                    .setPositiveBtnText("Contact")
-                                    .setNegativeBtnBackground("#FFA9A7A8")
-                                    .setGifResource(R.drawable.roknalogo)   //Pass your Gif here
-                                    .isCancellable(true)
-                                    .OnPositiveClicked(new FancyGifDialogListener() {
-                                        @Override
-                                        public void OnClick() {
+                            Log.d(TAG, "onItemClick: prid " + productList.get(position).getId());
+                            Intent intent = new Intent(ListsActivity.this,ProductDetailsActivity.class);
+                            intent.putExtra("prid",productList.get(position).getId());
+                            startActivity(intent);
 
-                                            String url = "https://api.whatsapp.com/send?phone=" + contact;
-                                            try {
-                                                PackageManager pm = getApplicationContext().getPackageManager();
-                                                pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
-                                                Intent i = new Intent(Intent.ACTION_VIEW);
-                                                i.setData(Uri.parse(url));
-                                                startActivity(i);
-                                            } catch (PackageManager.NameNotFoundException e) {
-                                                Toast.makeText(ListsActivity.this, "Whatsapp app not installed in your phone", Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    })
-                                    .OnNegativeClicked(new FancyGifDialogListener() {
-                                        @Override
-                                        public void OnClick() {
-
-                                        }
-                                    })
-                                    .build();
+//
                         }
                     });
 

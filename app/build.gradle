@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -55,6 +59,20 @@ dependencies {
     implementation 'com.roger.catloadinglibrary:catloadinglibrary:1.0.4'
 
     implementation 'com.github.medyo:android-about-page:1.2.5'
+
+    //rating dialog
+    implementation 'com.stepstone.apprating:app-rating:2.3.1'
+
+    //butterkniff
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    //imageFull screen
+    implementation 'com.github.felixsoares:ImageZoom:1.0'
+
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
+
+    implementation 'com.github.hsmnzaydn:imagezoom:1.3.0'
 
 
 }

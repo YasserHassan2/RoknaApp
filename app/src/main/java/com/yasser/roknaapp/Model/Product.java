@@ -2,14 +2,52 @@ package com.yasser.roknaapp.Model;
 
 public class Product {
 
-    String name,description,price,sale,imgURL;
+    String id,name,description,price,sale,imgURL1,imgURL2,imgURL3,imgURL4;
 
-    public Product(String name, String description, String price, String sale, String imgURL) {
+    public Product(String id, String name, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.sale = sale;
-        this.imgURL = imgURL;
+        this.imgURL1 = imgURL1;
+        this.imgURL2 = imgURL2;
+        this.imgURL3 = imgURL3;
+        this.imgURL4 = imgURL4;
+    }
+
+    public Product(String name, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.sale = sale;
+        this.imgURL1 = imgURL1;
+        this.imgURL2 = imgURL2;
+        this.imgURL3 = imgURL3;
+        this.imgURL4 = imgURL4;
+    }
+
+    public Product(String name, String description, String price, String sale) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.sale = sale;
+    }
+
+    public Product(String id, String name, String description, String price, String sale) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.sale = sale;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -44,11 +82,35 @@ public class Product {
         this.sale = sale;
     }
 
-    public String getImgURL() {
-        return imgURL;
+    public String getImgURL1() {
+        return imgURL1;
     }
 
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
+    public void setImgURL1(String imgURL1) {
+        this.imgURL1 = imgURL1;
+    }
+
+    public String getImgURL2() {
+        return imgURL2;
+    }
+
+    public void setImgURL2(String imgURL2) {
+        this.imgURL2 = imgURL2;
+    }
+
+    public String getImgURL3() {
+        return imgURL3;
+    }
+
+    public void setImgURL3(String imgURL3) {
+        this.imgURL3 = imgURL3;
+    }
+
+    public String getImgURL4() {
+        return imgURL4;
+    }
+
+    public void setImgURL4(String imgURL4) {
+        this.imgURL4 = imgURL4;
     }
 }

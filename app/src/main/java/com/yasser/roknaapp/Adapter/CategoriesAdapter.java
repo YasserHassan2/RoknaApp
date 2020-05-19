@@ -11,27 +11,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.yasser.roknaapp.Model.Product;
+import com.yasser.roknaapp.Model.Category;
 import com.yasser.roknaapp.R;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.RecyclerViewHolders> {
+public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.RecyclerViewHolders> {
 
-    private List<Product> productList;
+    private List<Category> CategoryList;
     private Context context;
     CustomItemClickListener listener;
 
-    public ProductAdapter(Context context, List<Product> productList) {
-        this.productList = productList;
+    public CategoriesAdapter(Context context, List<Category> CategoryList) {
+        this.CategoryList = CategoryList;
         this.context = context;
     }
 
     @Override
-    public RecyclerViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoriesAdapter.RecyclerViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_row, parent,false);
-        final RecyclerViewHolders holder = new RecyclerViewHolders(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_row, parent,false);
+        final CategoriesAdapter.RecyclerViewHolders holder = new CategoriesAdapter.RecyclerViewHolders(layoutView);
         layoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,19 +44,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolders holder, int position) {
+    public void onBindViewHolder(CategoriesAdapter.RecyclerViewHolders holder, int position) {
 
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.roknalogo);
-
-        Glide.with(context)
-                .load(productList.get(position).getImgURL1())
-                .apply(requestOptions)
-                .into(holder.productImage);
-
-        holder.productName.setText(productList.get(position).getName());
-        holder.productDesc.setText(productList.get(position).getDescription());
-        holder.productprice.setText(productList.get(position).getPrice()+" EGP");
+        holder.CategoryName.setText(CategoryList.get(position).getTitle());
 
     }
 
@@ -69,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
 
     @Override
     public int getItemCount() {
-        return this.productList.size();
+        return this.CategoryList.size();
     }
 
     public class RecyclerViewHolders extends RecyclerView.ViewHolder {
@@ -78,17 +68,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
          * this class contains onclick listener for the recylcer view home
          */
 
-        public TextView productName, productDesc, productprice, productSale;
-        public ImageView productImage;
+        public TextView CategoryName;
         public int position = 0;
 
         public RecyclerViewHolders(View itemView) {
             super(itemView);
-            productName = (TextView) itemView.findViewById(R.id.prName);
-            productDesc = (TextView) itemView.findViewById(R.id.prDesc);
-            productprice = (TextView) itemView.findViewById(R.id.prPrice);
-            productSale = (TextView) itemView.findViewById(R.id.prSale);
-            productImage = (ImageView) itemView.findViewById(R.id.pr_image);
+            CategoryName = (TextView) itemView.findViewById(R.id.cat_title);
+
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

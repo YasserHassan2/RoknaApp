@@ -3,6 +3,7 @@ package com.yasser.roknaapp.Model;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
@@ -31,11 +33,15 @@ import com.yasser.roknaapp.ui.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class DatabaseHelper {
 
     Context mContext;
     CatLoadingView  mView;
     Dialog dialog;
+
+    public static Boolean LOAD_FROM_LOCAL=false;
 
 
     ArrayList<Event> eventList = new ArrayList<Event>();
@@ -53,8 +59,16 @@ public class DatabaseHelper {
                 .applicationId("tbG3gg7UGswBUAi2DYtFm4yj0x9PBMbeUQAmrMvC")
                 .clientKey("ZrkL2lgfxaBEE0WL3b53VamVICRHQWqxInA9iUBj")
                 .server("https://parseapi.back4app.com")
+                .enableLocalDataStore()
                 .build()
         );
+
+
+        //enable localdata store
+
+//        Parse.enableLocalDatastore(mContext);
+//        Parse.initialize(mContext);
+
 
     }
 
@@ -169,6 +183,43 @@ public class DatabaseHelper {
 
     public void showFeedbackDialog(String title)
     {
+
+    }
+
+    public void loadProuctsFromLocal()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
+        query.fromLocalDatastore();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                
+            }
+        });
+    }
+
+    public void pinProductsinBackground(List<Product> productArrayList)
+    {
+        Log.d(TAG, "pinProductsinBackground: Start Pining Prodcuts");
+
+        for (int i =0 ; i <=productArrayList.size()-1;i++)
+        {
+            ParseObject parseObject = new ParseObject("Products");
+            parseObject.put("id",productArrayList.get(i).getId());
+            parseObject.put("name",productArrayList.get(i).getName());
+            parseObject.put("description",productArrayList.get(i).getDescription());
+            parseObject.put("price",productArrayList.get(i).getPrice());
+            if (productArrayList.get(i).getSale()!=null)
+            parseObject.put("sale",productArrayList.get(i).getSale());
+            parseObject.put("url1",productArrayList.get(i).getImgURL1());
+            parseObject.put("url2",productArrayList.get(i).getImgURL2());
+            parseObject.put("url3",productArrayList.get(i).getImgURL3());
+            parseObject.put("url4",productArrayList.get(i).getImgURL4());
+
+            Log.d(TAG, "pinProductsinBackground: Done with Product Name " + productArrayList.get(i).getId() + " Position : " + i);
+            parseObject.pinInBackground();
+        }
+        LOAD_FROM_LOCAL =true;
 
     }
 
