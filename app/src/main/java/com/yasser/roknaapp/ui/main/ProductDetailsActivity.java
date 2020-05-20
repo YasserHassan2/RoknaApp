@@ -200,6 +200,34 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         description.setText(prDesc);
                         price.setText(prPrice+" EGP");
 
+                        image1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendToPreview(imgURL1);
+                            }
+                        });
+                        image2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendToPreview(imgURL2);
+                            }
+                        });
+
+                        image3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendToPreview(imgURL3);
+                            }
+                        });
+
+                        image4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                sendToPreview(imgURL4);
+                            }
+                        });
+
+
 
                     }else
                     {
@@ -212,8 +240,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             });
         }
 }
-public void showImageList()
+public void sendToPreview(String imgUrl)
 {
-
+    Intent intent = new Intent(ProductDetailsActivity.this,ViewImageActivity.class);
+    intent.putExtra("image_url",imgUrl);
+    startActivity(intent);
 }
 }
