@@ -33,6 +33,7 @@ import com.yasser.roknaapp.ui.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class DatabaseHelper {
@@ -202,23 +203,28 @@ public class DatabaseHelper {
     {
         Log.d(TAG, "pinProductsinBackground: Start Pining Prodcuts");
 
-        for (int i =0 ; i <=productArrayList.size()-1;i++)
-        {
-            ParseObject parseObject = new ParseObject("Products");
-            parseObject.put("id",productArrayList.get(i).getId());
-            parseObject.put("name",productArrayList.get(i).getName());
-            parseObject.put("description",productArrayList.get(i).getDescription());
-            parseObject.put("price",productArrayList.get(i).getPrice());
-            if (productArrayList.get(i).getSale()!=null)
-            parseObject.put("sale",productArrayList.get(i).getSale());
-            parseObject.put("url1",productArrayList.get(i).getImgURL1());
-            parseObject.put("url2",productArrayList.get(i).getImgURL2());
-            parseObject.put("url3",productArrayList.get(i).getImgURL3());
-            parseObject.put("url4",productArrayList.get(i).getImgURL4());
+        ParseObject products = new ParseObject("products");
 
-            Log.d(TAG, "pinProductsinBackground: Done with Product Name " + productArrayList.get(i).getId() + " Position : " + i);
-            parseObject.pinInBackground();
-        }
+
+
+//        for (int i =0 ; i <=productArrayList.size()-1;i++)
+//        {
+//            ParseObject parseObject = new ParseObject("Products");
+//            parseObject.put("id",productArrayList.get(i).getId());
+//            parseObject.put("name",productArrayList.get(i).getName());
+//            parseObject.put("category_id",productArrayList.get(i).getCategory_id());
+//            parseObject.put("description",productArrayList.get(i).getDescription());
+//            parseObject.put("price",productArrayList.get(i).getPrice());
+//            if (productArrayList.get(i).getSale()!=null)
+//            parseObject.put("sale",productArrayList.get(i).getSale());
+//            parseObject.put("url1",productArrayList.get(i).getImgURL1());
+//            parseObject.put("url2",productArrayList.get(i).getImgURL2());
+//            parseObject.put("url3",productArrayList.get(i).getImgURL3());
+//            parseObject.put("url4",productArrayList.get(i).getImgURL4());
+//
+//            Log.d(TAG, "pinProductsinBackground: Done with Product Name " + productArrayList.get(i).getId() + " Position : " + i);
+//            parseObject.pinInBackground();
+//        }
         LOAD_FROM_LOCAL =true;
 
     }

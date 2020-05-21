@@ -141,6 +141,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         intent_getingData = getIntent();
         if (databaseHelper.LOAD_FROM_LOCAL==true)
         {
+            Log.d(TAG, "onCreate: load from local");
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
             query.fromLocalDatastore();
             query.whereEqualTo("id",intent_getingData.getStringExtra("prid"));

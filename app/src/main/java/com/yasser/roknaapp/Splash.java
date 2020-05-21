@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,13 +30,17 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Model.AdBanner;
 import com.yasser.roknaapp.Model.DatabaseHelper;
+import com.yasser.roknaapp.Model.DatabaseVersion;
 import com.yasser.roknaapp.Model.Promo;
+import com.yasser.roknaapp.localDatabase.DatabaseManager;
+import com.yasser.roknaapp.localDatabase.PreferencesHelper;
 import com.yasser.roknaapp.ui.main.MainActivity;
 
 import java.util.List;
 import java.util.Random;
 
 public class Splash extends AppCompatActivity {
+    private static final String TAG = "SplashActivity" ;
     private final int SPLASH_DISPLAY_LENGTH = 4000;
     ImageView iv_viewMe_logo;
     Boolean allow_promo=false;
@@ -42,6 +48,8 @@ public class Splash extends AppCompatActivity {
     Promo promo;
     int promoCode,used_codes;
     DatabaseHelper databaseHelper;
+    int updateDatabase;
+    DatabaseManager databaseManager;
 
 
     @Override
@@ -51,6 +59,7 @@ public class Splash extends AppCompatActivity {
         iv_viewMe_logo = findViewById(R.id.profile_image);
         databaseHelper = new DatabaseHelper(Splash.this);
         databaseHelper.connectToDB();
+        databaseManager = new DatabaseManager(this);
 
 
         if (isNetworkConnected()){
@@ -148,7 +157,22 @@ public class Splash extends AppCompatActivity {
                     allow_promo = o.getBoolean("allow_promo");
                     codes_number = o.getInt("codes_number");
                     used_codes = o.getInt("used_Codes");
+                    updateDatabase = o.getInt("database_version");
                     }
+
+                    Log.d(TAG, "done: databaseVersion from database = " + updateDatabase);
+
+                    databaseManager.createDatabaseVersion(new DatabaseVersion(updateDatabase));
+
+
+                    Log.d(TAG, "done: creating prefrences  and this from get " + databaseManager.getDatabaseVersion().getDb_version());
+
+
+
+
+
+
+
 
                     promo = new Promo(allow_promo,codes_number,used_codes);
                     if (promo.getAllow_promo()==true&&promo.getCodes_numbers()!=0)

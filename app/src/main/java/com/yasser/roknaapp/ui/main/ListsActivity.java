@@ -85,10 +85,15 @@ public class ListsActivity extends AppCompatActivity {
         switch (loadList){
 
             case 1:
-                if (databaseHelper.LOAD_FROM_LOCAL==true)
-                loadProducts(recyclerView);
+                if (databaseHelper.LOAD_FROM_LOCAL==true) {
+                    loadProductsFromLocal(recyclerView);
+                    Log.d(TAG, "onCreate: load from local");
+                }
                 else
-                loadProducts(recyclerView);
+                {
+                    Log.d(TAG, "onCreate: load online ");
+                    loadProducts(recyclerView);
+                }
                 break;
             case 2:
                 databaseHelper.loadWorkshops(recyclerView);
@@ -124,6 +129,7 @@ public class ListsActivity extends AppCompatActivity {
                                         String prDesc = o.getString("description");
                                         String prPrice = o.getString("price");
                                         String prSale = o.getString("sale");
+                                        int category_id = o.getInt("category_id");
 
                                         ParseFile imageFile1 = o.getParseFile("image");
                                         String imageURL1 = imageFile1.getUrl();
@@ -135,7 +141,7 @@ public class ListsActivity extends AppCompatActivity {
                                         String imageURL4= imageFile4.getUrl();
 
 
-                                        Product product = new Product(pr_id,prName,prDesc,prPrice,prSale,imageURL1,imageURL2,imageURL3,imageURL4);
+                                        Product product = new Product(pr_id,prName,category_id,prDesc,prPrice,prSale,imageURL1,imageURL2,imageURL3,imageURL4);
                                         productList.add(product);
 
                                     }
@@ -149,6 +155,73 @@ public class ListsActivity extends AppCompatActivity {
                     recyclerView.setAdapter(RecyclerViewAdapter);
                     if (productList.isEmpty()) {
                        dialog.showAlertDialogToMain("No Products Avaliable at moment, stay tuned!");
+
+
+                    }
+                    RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Log.d(TAG, "onItemClick: prid " + productList.get(position).getId());
+                            Intent intent = new Intent(ListsActivity.this,ProductDetailsActivity.class);
+                            intent.putExtra("prid",productList.get(position).getId());
+                            startActivity(intent);
+
+//
+                        }
+                    });
+
+                } else {
+                    mView.dismiss();
+                    Toast.makeText(ListsActivity.this, "error= " + e, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+    public void loadProductsFromLocal(final RecyclerView recyclerView) {
+        mView = new CatLoadingView();
+        mView.setCanceledOnTouchOutside(false);
+        mView.show(getSupportFragmentManager(),"");
+
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("products");
+        query.fromLocalDatastore();
+        query.ignoreACLs();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, final ParseException e) {
+                if (e == null) {
+                    for (ParseObject o : objects) {
+
+                        String pr_id = o.getObjectId();
+                        String prName = o.getString("name");
+                        String prDesc = o.getString("description");
+                        String prPrice = o.getString("price");
+                        String prSale = o.getString("sale");
+
+                        ParseFile imageFile1 = o.getParseFile("image");
+                        String imageURL1 = imageFile1.getUrl();
+                        ParseFile imageFile2 = o.getParseFile("imageURL1");
+                        String imageURL2 = imageFile2.getUrl();
+                        ParseFile imageFile3 = o.getParseFile("imageURL2");
+                        String imageURL3 = imageFile3.getUrl();
+                        ParseFile imageFile4 = o.getParseFile("imageURL3");
+                        String imageURL4= imageFile4.getUrl();
+
+
+                        Product product = new Product(pr_id,prName,prDesc,prPrice,prSale,imageURL1,imageURL2,imageURL3,imageURL4);
+                        productList.add(product);
+
+                    }
+                    mView.dismiss();
+                    databaseHelper.pinProductsinBackground(productList);
+
+                    recyclerView.setLayoutManager(new LinearLayoutManager(ListsActivity.this));
+
+                    ProductAdapter RecyclerViewAdapter = new ProductAdapter(ListsActivity.this, productList);
+
+                    recyclerView.setAdapter(RecyclerViewAdapter);
+                    if (productList.isEmpty()) {
+                        dialog.showAlertDialogToMain("No Products Avaliable at moment, stay tuned!");
 
 
                     }
