@@ -6,4 +6,7 @@ public class DatabaseInfo {
 
     public static final String PRODUCTS = "products";
     public static final String CATEGORIES = "categories";
+    public static final String ADS_BANNER = "ads_banner";
+    public static final String WORKSHOPS = "workshops";
+    public static final String EVENTS = "events";
 }

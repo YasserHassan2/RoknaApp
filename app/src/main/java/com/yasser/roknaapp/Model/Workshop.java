@@ -22,6 +22,9 @@ public class Workshop {
         this.location = location;
     }
 
+    public Workshop() {
+    }
+
     public String getPhone() {
         return phone;
     }

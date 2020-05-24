@@ -64,6 +64,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
 
     }
 
+    public void setData(List<Event> list) {
+        eventList = list;
+        notifyDataSetChanged();
+    }
 
     //Set method of OnItemClickListener object
     public void setOnItemClickListener(CustomItemClickListener recyclerViewItemClickListner) {

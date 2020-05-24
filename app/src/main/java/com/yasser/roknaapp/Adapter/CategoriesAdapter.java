@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yasser.roknaapp.Model.Category;
+import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.R;
+import com.yasser.roknaapp.ui.main.ProductCategoryActivity;
 
 import java.util.List;
 
@@ -25,6 +27,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Re
     public CategoriesAdapter(Context context, List<Category> CategoryList) {
         this.CategoryList = CategoryList;
         this.context = context;
+    }
+
+    public CategoriesAdapter() {
     }
 
     @Override
@@ -55,7 +60,10 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Re
     public void setOnItemClickListener(CustomItemClickListener recyclerViewItemClickListner) {
         this.listener = recyclerViewItemClickListner;
     }
-
+    public void setData(List<Category> list) {
+        CategoryList = list;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

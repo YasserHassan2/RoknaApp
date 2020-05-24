@@ -6,6 +6,9 @@ public class Event {
     String eventTitle,eventDates,eventImageURL;
     ParseGeoPoint eventLocation;
 
+    public Event() {
+    }
+
     public Event(String eventTitle, String eventDates, String eventImageURL, ParseGeoPoint eventLocation) {
         this.eventTitle = eventTitle;
         this.eventDates = eventDates;

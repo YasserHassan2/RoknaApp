@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.Model.Workshop;
 import com.yasser.roknaapp.R;
 
@@ -65,7 +66,10 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.Recycl
         holder.Workshopprice.setText(workshopList.get(position).getPrice() + " per person");
 
     }
-
+    public void setData(List<Workshop> list) {
+        workshopList = list;
+        notifyDataSetChanged();
+    }
 
     //Set method of OnItemClickListener object
     public void setOnItemClickListener(CustomItemClickListener recyclerViewItemClickListner) {

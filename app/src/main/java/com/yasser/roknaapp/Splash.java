@@ -1,5 +1,6 @@
 package com.yasser.roknaapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ import com.yasser.roknaapp.Model.AdBanner;
 import com.yasser.roknaapp.Model.DatabaseHelper;
 import com.yasser.roknaapp.Model.DatabaseVersion;
 import com.yasser.roknaapp.Model.Promo;
+import com.yasser.roknaapp.localDatabase.DatabaseInterface;
 import com.yasser.roknaapp.localDatabase.DatabaseManager;
 import com.yasser.roknaapp.localDatabase.PreferencesHelper;
 import com.yasser.roknaapp.ui.main.MainActivity;
@@ -41,25 +45,31 @@ import java.util.Random;
 
 public class Splash extends AppCompatActivity {
     private static final String TAG = "SplashActivity" ;
-    private final int SPLASH_DISPLAY_LENGTH = 4000;
+    private final int SPLASH_DISPLAY_LENGTH = 8000;
     ImageView iv_viewMe_logo;
     Boolean allow_promo=false;
     int codes_number=0;
     Promo promo;
     int promoCode,used_codes;
     DatabaseHelper databaseHelper;
-    int updateDatabase;
+    int databaseVerisonFromServer;
     DatabaseManager databaseManager;
+    SplashPresenter splashPresenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // remove title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         iv_viewMe_logo = findViewById(R.id.profile_image);
         databaseHelper = new DatabaseHelper(Splash.this);
         databaseHelper.connectToDB();
         databaseManager = new DatabaseManager(this);
+        splashPresenter = new SplashPresenter(Splash.this);
 
 
         if (isNetworkConnected()){
@@ -137,9 +147,7 @@ public class Splash extends AppCompatActivity {
                 }
             }
         });
-        Intent intent = new Intent(Splash.this,MainActivity.class);
-        startActivity(intent);
-        finish();
+
 
 
 
@@ -157,46 +165,89 @@ public class Splash extends AppCompatActivity {
                     allow_promo = o.getBoolean("allow_promo");
                     codes_number = o.getInt("codes_number");
                     used_codes = o.getInt("used_Codes");
-                    updateDatabase = o.getInt("database_version");
+                    allow_promo = o.getBoolean("allow_promo");
+                    databaseVerisonFromServer = o.getInt("database_version");
                     }
 
-                    Log.d(TAG, "done: databaseVersion from database = " + updateDatabase);
+                    if (SplashPresenter.checkUpdate(databaseVerisonFromServer, new DatabaseInterface() {
+                        @Override
+                        public void onStart() {
+                            Log.d(TAG, "onStart: ");
 
-                    databaseManager.createDatabaseVersion(new DatabaseVersion(updateDatabase));
+                            Log.d(TAG, "done: installing database");
+
+                        }
+
+                        @Override
+                        public void onSuccess(@NonNull Boolean value) {
+                            Log.d(TAG, "onSuccess: sql successed");
+                            new Handler().postDelayed(new Runnable(){
+                                @Override
+                                public void run() {
+                                    /* Create an Intent that will start the Menu-Activity. */
+                                    IntentToMainActivity();
+                                }
+                            }, SPLASH_DISPLAY_LENGTH);
 
 
-                    Log.d(TAG, "done: creating prefrences  and this from get " + databaseManager.getDatabaseVersion().getDb_version());
+                        }
+
+                        @Override
+                        public void onError(@NonNull Throwable throwable) {
 
 
-
-
-
-
-
-
-                    promo = new Promo(allow_promo,codes_number,used_codes);
-                    if (promo.getAllow_promo()==true&&promo.getCodes_numbers()!=0)
-                          {
-                                 promoCode = getRandomNumber(1000,5000);
-                                 updateUsedPromocodes();
-                                 Intent intent = new Intent(Splash.this,MainActivity.class);
-                                 intent.putExtra("promo_code",promoCode);
-                                 startActivity(intent);
-                                 finish();
-                          }
-
+                        }
+                    }));
                     else {
-                        lockPromoCodes();
+                        Log.d(TAG, "done: database is already installed");
+
+
+                        new Handler().postDelayed(new Runnable(){
+                            @Override
+                            public void run() {
+                                /* Create an Intent that will start the Menu-Activity. */
+                                IntentToMainActivity();
+                            }
+                        }, 4000);
+
                     }
+
+
+
+
+
+//                    promo = new Promo(allow_promo,codes_number,used_codes);
+//                    if (promo.getAllow_promo()==true&&promo.getCodes_numbers()!=0)
+//                          {
+//                                 promoCode = getRandomNumber(1000,5000);
+//                                 updateUsedPromocodes();
+//                                 Intent intent = new Intent(Splash.this,MainActivity.class);
+//                                 intent.putExtra("promo_code",promoCode);
+//                                 startActivity(intent);
+//                                 finish();
+//                          }
+//
+//
+//                    else {
+//                        lockPromoCodes();
+//                    }
                 } else {
-                    Intent intent = new Intent(Splash.this,MainActivity.class);
-                    startActivity(intent);
+
+                    Toast.makeText(splashPresenter, "Something Went Wrong", Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
 
 
+    }
+
+    private void IntentToMainActivity() {
+        Intent intent = new Intent(Splash.this,MainActivity.class);
+        Log.d(TAG, "onSuccess: sql success");
+
+        startActivity(intent);
+        finish();
     }
 
     private int getRandomNumber(int min,int max) {

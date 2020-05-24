@@ -43,4 +43,6 @@
     <color name="overlay_primeary">#aafdef96</color>
 
     <color name="overlay_white">#aaffffff</color>
+
+    <color name="overlay_black">#aa000000</color>
 </resources>

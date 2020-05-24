@@ -3,6 +3,9 @@ package com.yasser.roknaapp.Model;
 public class AdBanner {
     String ad_url,ad_img,add_snppit;
 
+    public AdBanner() {
+    }
+
     public AdBanner(String ad_url, String ad_img, String add_snppit) {
         this.ad_url = ad_url;
         this.ad_img = ad_img;

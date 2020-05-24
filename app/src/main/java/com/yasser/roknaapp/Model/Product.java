@@ -1,6 +1,8 @@
 package com.yasser.roknaapp.Model;
 
 public class Product {
+    public Product() {
+    }
 
     String id,name,description,price,sale,imgURL1,imgURL2,imgURL3,imgURL4;
     int category_id;

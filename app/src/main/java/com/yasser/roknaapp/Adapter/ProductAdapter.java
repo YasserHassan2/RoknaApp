@@ -60,6 +60,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
 
     }
 
+    public void setData(List<Product> list) {
+        productList = list;
+        notifyDataSetChanged();
+    }
 
     //Set method of OnItemClickListener object
     public void setOnItemClickListener(CustomItemClickListener recyclerViewItemClickListner) {
