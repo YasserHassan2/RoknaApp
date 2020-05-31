@@ -21,6 +21,7 @@
       android:background="@color/colorPrimaryDark"
       ></TextView>
 
+
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="6dp"
         android:layout_margin="8dp"
@@ -46,6 +47,15 @@
             app:sliderStartAutoCycle="true" />
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:textSize="@dimen/_14sdp"
+        android:text="Browse By Category"
+        android:fontFamily="sans-serif-condensed"
+        ></TextView>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_product"
         android:layout_width="match_parent"

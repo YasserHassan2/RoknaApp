@@ -11,13 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
+
     <ImageView
-        android:visibility="gone"
+
         android:id="@+id/overlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
         android:src="@color/overlay_black"
-        android:scaleType="centerCrop" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/iv_gif_container"

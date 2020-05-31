@@ -59,13 +59,24 @@ public class WorkshopActivity extends AppCompatActivity implements LoaderManager
             workshopAdapter = new WorkshopAdapter(WorkshopActivity.this, data);
             recyclerView.setLayoutManager(new LinearLayoutManager(WorkshopActivity.this));
             recyclerView.setAdapter(workshopAdapter);
+            workshopAdapter.setOnItemClickListener(new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+
+                }
+            });
 
         } else {
 
             workshopAdapter.setData(data);
             recyclerView.setLayoutManager(new LinearLayoutManager(WorkshopActivity.this));
             recyclerView.setAdapter(workshopAdapter);
+            workshopAdapter.setOnItemClickListener(new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
 
+                }
+            });
         }
     }
 

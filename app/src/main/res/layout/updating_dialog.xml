@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/bodyy"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_gravity="center"
+    app:cardCornerRadius="15dp"
+    app:cardPreventCornerOverlap="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_loading"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                android:layout_margin="@dimen/_15sdp"
+                app:lottie_fileName="updatingdatabase.json"></com.airbnb.lottie.LottieAnimationView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_14sdp"
+                android:text="Please wait a seconds..we getting data for you."
+                android:fontFamily="sans-serif-condensed"
+                android:layout_margin="15dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                ></TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

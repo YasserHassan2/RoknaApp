@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -31,8 +33,10 @@ import com.stfalcon.imageviewer.StfalconImageViewer;
 import com.yasser.roknaapp.Model.DatabaseHelper;
 import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.R;
+import com.yasser.roknaapp.localDatabase.DatabaseLocal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.felix.imagezoom.ImageZoom;
 import butterknife.BindView;
@@ -100,7 +104,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //                                        @Override
 //                                        public void OnClick() {
 
-                                            String url = "https://api.whatsapp.com/send?phone=" + contact + "&text=" +  "طلب " + prName + " بسعر  " + prPrice;
+                                            String url = "https://api.whatsapp.com/send?phone=" + contact + "&text=" +  "طلب " + product.getName() + " بسعر  " + product.getPrice();
                                             try {
                                                 PackageManager pm = getApplicationContext().getPackageManager();
                                                 pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES);
@@ -136,44 +140,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // Return Image's base 64 code
        // imageViewZoom.getBase64();
-
+        
+      
+        
 
         intent_getingData = getIntent();
-        if (databaseHelper.LOAD_FROM_LOCAL==true)
+
+        selectProdcutByID(intent_getingData.getStringExtra("prid"));
+        if (product!=null)
         {
-            Log.d(TAG, "onCreate: load from local");
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
-            query.fromLocalDatastore();
-            query.whereEqualTo("id",intent_getingData.getStringExtra("prid"));
-            query.getFirstInBackground(new GetCallback<ParseObject>() {
-                @Override
-                public void done(ParseObject object, ParseException e) {
-                    if (e==null)
-                    {
-
-                        String pr_id = object.getObjectId();
-                        prName = object.getString("name");
-                        String prDesc = object.getString("description");
-                        prPrice = object.getString("price");
-                        String prSale = object.getString("sale");
-
-                        String imgURL1 = object.getString("url1");
-                        imgURL11 = imgURL1;
-
-                        String imgURL2 = object.getString("url2");
-                        imgURL22 = imgURL22;
-
-                        String imgURL3 = object.getString("url3");
-                        imgURL33 = imgURL3;
-
-                        String imgURL4 = object.getString("url4");
-                        imgURL44 = imgURL4;
-
-                        images.add(imgURL11);
-                        images.add(imgURL22);
-                        images.add(imgURL33);
-                        images.add(imgURL44);
-                        product = new Product(pr_id,prName,prDesc,prPrice,prSale,imgURL1,imgURL2,imgURL3,imgURL4);
 
                         RequestOptions requestOptions = new RequestOptions()
                                 .placeholder(R.drawable.roknalogo);
@@ -181,64 +156,57 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
 
                         Glide.with(ProductDetailsActivity.this)
-                                .load(imgURL1)
+                                .load(product.getImgURL1())
                                 .apply(requestOptions)
                                 .into(image1);
                         Glide.with(ProductDetailsActivity.this)
-                                .load(imgURL2)
+                                .load(product.getImgURL2())
                                 .apply(requestOptions)
                                 .into(image2);
                         Glide.with(ProductDetailsActivity.this)
-                                .load(imgURL3)
+                                .load(product.getImgURL3())
                                 .apply(requestOptions)
                                 .into(image3);
                         Glide.with(ProductDetailsActivity.this)
-                                .load(imgURL4)
+                                .load(product.getImgURL4())
                                 .apply(requestOptions)
                                 .into(image4);
 
-                        title.setText(prName);
-                        description.setText(prDesc);
-                        price.setText(prPrice+" EGP");
+                        title.setText(product.getName());
+                        description.setText(product.getDescription());
+                        price.setText(product.getPrice()+" EGP");
 
                         image1.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                sendToPreview(imgURL1);
+                                sendToPreview(product.getImgURL1());
                             }
                         });
                         image2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                sendToPreview(imgURL2);
+                                sendToPreview(product.getImgURL2());
                             }
                         });
 
                         image3.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                sendToPreview(imgURL3);
+                                sendToPreview(product.getImgURL3());
                             }
                         });
 
                         image4.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                sendToPreview(imgURL4);
+                                sendToPreview(product.getImgURL4());
                             }
                         });
 
-
-
-                    }else
-                    {
-                        Log.d(TAG, "done: exception : "+ e);
-                        Toast.makeText(ProductDetailsActivity.this, "Sorry, Something Wrong Please try later", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ProductDetailsActivity.this,MainActivity.class);
-                        startActivity(intent);
-                    }
-                }
-            });
+            
+        }
+        else {
+            Toast.makeText(this, "Something went wrong..try again later", Toast.LENGTH_SHORT).show();
         }
 }
 public void sendToPreview(String imgUrl)
@@ -247,4 +215,43 @@ public void sendToPreview(String imgUrl)
     intent.putExtra("image_url",imgUrl);
     startActivity(intent);
 }
+
+public void selectProdcutByID(String id){
+
+    DatabaseLocal mydb =  DatabaseLocal.getInstance(ProductDetailsActivity.this);
+    SQLiteDatabase db = mydb.getReadableDatabase();
+    Product result = new Product();
+    product = new Product();
+    Cursor GroupCursor = null;
+    try {
+    GroupCursor = db.rawQuery("select * from " + "products" + " where " + "parse_server_id" + "='" + id + "'" , null);
+
+    if (GroupCursor != null && GroupCursor.moveToFirst()) {
+
+
+        Log.d(TAG, "selectProdcutByID: SUCESS!!");
+        product.setId(GroupCursor.getString(1));
+        product.setName(GroupCursor.getString(2));
+
+        product.setSale(GroupCursor.getString(3));
+
+        product.setDescription(GroupCursor.getString(4));
+
+
+        product.setPrice(GroupCursor.getString(5));
+        product.setImgURL1(GroupCursor.getString(6));
+        product.setImgURL2(GroupCursor.getString(7));
+        product.setImgURL3(GroupCursor.getString(8));
+        product.setImgURL4(GroupCursor.getString(9));
+        product.setCategory_id(Integer.parseInt(GroupCursor.getString(10)));
+    }
+
+    } finally {
+        if (GroupCursor != null) {
+            GroupCursor.close();
+        }
+
+    }
+}
+
 }

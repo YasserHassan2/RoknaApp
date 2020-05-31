@@ -80,6 +80,9 @@ dependencies {
 
     //auto sizing for andorid devices screens
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    
+    //lottie anmation
+    implementation 'com.airbnb.android:lottie:3.4.0'
 
 
 }

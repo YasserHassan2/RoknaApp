@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.yasser.roknaapp.Adapter.CustomItemClickListener;
 import com.yasser.roknaapp.Adapter.EventsAdapter;
 import com.yasser.roknaapp.Adapter.WorkshopAdapter;
 import com.yasser.roknaapp.Loader.EventsLoader;
@@ -56,12 +58,24 @@ public class EventsActivity extends AppCompatActivity implements LoaderManager.L
             eventsAdapter = new EventsAdapter(EventsActivity.this, data);
             recyclerView.setLayoutManager(new LinearLayoutManager(EventsActivity.this));
             recyclerView.setAdapter(eventsAdapter);
+            eventsAdapter.setOnItemClickListener(new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+
+                }
+            });
 
         } else {
 
             eventsAdapter.setData(data);
             recyclerView.setLayoutManager(new LinearLayoutManager(EventsActivity.this));
             recyclerView.setAdapter(eventsAdapter);
+            eventsAdapter.setOnItemClickListener(new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+
+                }
+            });
 
         }
     }
