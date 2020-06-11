@@ -10,25 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.yasser.roknaapp.Adapter.CategoriesAdapter;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
-import com.yasser.roknaapp.Adapter.ProductAdapter;
-import com.yasser.roknaapp.Dialog;
+import com.yasser.roknaapp.Dialogs;
 import com.yasser.roknaapp.Loader.CategoriesLoader;
 import com.yasser.roknaapp.Model.Category;
 import com.yasser.roknaapp.Model.DatabaseHelper;
-import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.R;
 
 import java.util.ArrayList;
@@ -39,7 +29,7 @@ public class ProductCategoryActivity extends AppCompatActivity implements Loader
     CatLoadingView mView;
     RecyclerView recyclerView;
     DatabaseHelper databaseHelper;
-    Dialog dialog;
+    Dialogs dialogs;
     static List<Category> categoriesList = new ArrayList<Category>();
     CategoriesAdapter RecyclerViewAdapter;
 
@@ -50,7 +40,7 @@ public class ProductCategoryActivity extends AppCompatActivity implements Loader
         getSupportLoaderManager().initLoader(0, null, this);
 
         recyclerView = findViewById(R.id.cat_recyclerView);
-        dialog = new Dialog(ProductCategoryActivity.this);
+        dialogs = new Dialogs(ProductCategoryActivity.this);
         databaseHelper = new DatabaseHelper(ProductCategoryActivity.this);
         databaseHelper.connectToDB();
 

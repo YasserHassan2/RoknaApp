@@ -146,6 +146,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         intent_getingData = getIntent();
 
+        Log.d(TAG, "onCreate: id from intent  " + intent_getingData.getStringExtra("prid"));
         selectProdcutByID(intent_getingData.getStringExtra("prid"));
         if (product!=null)
         {
@@ -230,6 +231,7 @@ public void selectProdcutByID(String id){
 
 
         Log.d(TAG, "selectProdcutByID: SUCESS!!");
+        Log.d(TAG, "selectProdcutByID: product id " + GroupCursor.getString(1) );
         product.setId(GroupCursor.getString(1));
         product.setName(GroupCursor.getString(2));
 

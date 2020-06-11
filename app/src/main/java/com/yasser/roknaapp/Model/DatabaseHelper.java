@@ -1,8 +1,6 @@
 package com.yasser.roknaapp.Model;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -17,30 +15,22 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.SaveCallback;
 import com.roger.catloadinglibrary.CatLoadingView;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
 import com.yasser.roknaapp.Adapter.EventsAdapter;
-import com.yasser.roknaapp.Adapter.ProductAdapter;
 import com.yasser.roknaapp.Adapter.WorkshopAdapter;
-import com.yasser.roknaapp.Dialog;
-import com.yasser.roknaapp.R;
-import com.yasser.roknaapp.ui.main.ListsActivity;
-import com.yasser.roknaapp.ui.main.MainActivity;
+import com.yasser.roknaapp.Dialogs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class DatabaseHelper {
 
     Context mContext;
     CatLoadingView  mView;
-    Dialog dialog;
+    Dialogs dialogs;
 
     public static Boolean LOAD_FROM_LOCAL=false;
 
@@ -50,7 +40,7 @@ public class DatabaseHelper {
 
     public DatabaseHelper(Context mContext) {
         this.mContext = mContext;
-        dialog = new Dialog(mContext);
+        dialogs = new Dialogs(mContext);
     }
 
     public void connectToDB() {
@@ -76,7 +66,7 @@ public class DatabaseHelper {
 
 
     public void loadWorkshops(final RecyclerView recyclerView) {
-        dialog.showProgressDialog("Loading","Getting Workshops data..");
+        dialogs.showProgressDialog("Loading","Getting Workshops data..");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("workshops");
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -101,7 +91,7 @@ public class DatabaseHelper {
 
                     }
 
-                    dialog.stopDialog();
+                    dialogs.stopDialog();
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -110,7 +100,7 @@ public class DatabaseHelper {
                     recyclerView.setAdapter(RecyclerViewAdapter);
 
                     if (workshopsList.isEmpty()) {
-                        dialog.showAlertDialogToMain("No Workshop Avaliable at moment, stay tuned!");
+                        dialogs.showAlertDialogToMain("No Workshop Avaliable at moment, stay tuned!");
 
                     }
 
@@ -124,7 +114,7 @@ public class DatabaseHelper {
 
                 } else {
                     Toast.makeText(mContext, "error= " + e, Toast.LENGTH_LONG).show();
-                    dialog.stopDialog();
+                    dialogs.stopDialog();
                 }
             }
         });
@@ -133,7 +123,7 @@ public class DatabaseHelper {
 
 
     public void loadEvents(final RecyclerView recyclerView) {
-        dialog.showProgressDialog("Loading","Getting Events data..");
+        dialogs.showProgressDialog("Loading","Getting Events data..");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("events");
 
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -155,10 +145,10 @@ public class DatabaseHelper {
                         eventList.add(event);
 
                     }
-                    dialog.stopDialog();
+                    dialogs.stopDialog();
                     recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                     if (eventList.isEmpty()) {
-                        dialog.showAlertDialogToMain("No Events Avaliable at moment, stay tuned!");
+                        dialogs.showAlertDialogToMain("No Events Avaliable at moment, stay tuned!");
 
                     }
                     EventsAdapter RecyclerViewAdapter = new EventsAdapter(mContext, eventList);
@@ -175,7 +165,7 @@ public class DatabaseHelper {
 
                 } else {
                     Toast.makeText(mContext, "error= " + e, Toast.LENGTH_LONG).show();
-                    dialog.stopDialog();
+                    dialogs.stopDialog();
                 }
             }
         });

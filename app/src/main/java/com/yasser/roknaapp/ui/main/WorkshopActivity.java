@@ -83,5 +83,6 @@ public class WorkshopActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoaderReset(@NonNull Loader<List<Workshop>> loader) {
 
+
     }
 }

@@ -1,15 +1,17 @@
 package com.yasser.roknaapp;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
-import android.net.Uri;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,24 +22,17 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.roger.catloadinglibrary.CatLoadingView;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
-import com.yasser.roknaapp.Model.AdBanner;
 import com.yasser.roknaapp.Model.DatabaseHelper;
-import com.yasser.roknaapp.Model.DatabaseVersion;
 import com.yasser.roknaapp.Model.Promo;
 import com.yasser.roknaapp.localDatabase.DatabaseInterface;
 import com.yasser.roknaapp.localDatabase.DatabaseManager;
-import com.yasser.roknaapp.localDatabase.PreferencesHelper;
 import com.yasser.roknaapp.ui.main.MainActivity;
 
 import java.util.List;
@@ -55,6 +50,7 @@ public class Splash extends AppCompatActivity {
     int databaseVerisonFromServer;
     DatabaseManager databaseManager;
     SplashPresenter splashPresenter;
+    Dialog updateDialog;
 
 
     @Override
@@ -72,46 +68,44 @@ public class Splash extends AppCompatActivity {
         splashPresenter = new SplashPresenter(Splash.this);
 
 
-        if (isNetworkConnected()){
-            YoYo.with(Techniques.FadeInDown)
-                    .duration(3000)
-                    .repeat(0)
-                    .playOn(iv_viewMe_logo);
-           getPromoFromDatabase();
-
-        }
+            if (isNetworkAvaliable()) {
+                YoYo.with(Techniques.FadeInDown)
+                        .duration(3000)
+                        .repeat(0)
+                        .playOn(iv_viewMe_logo);
+                getPromoFromDatabase();
+            }else {
+                try {
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(Splash.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                    builder.setTitle(getResources().getString(R.string.app_name));
+                    builder.setMessage("No Internet Connection try again later");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                       finish();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
     }
 
-
-    private Boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (! (cm.getActiveNetworkInfo() != null)) {
-            new FancyGifDialog.Builder(Splash.this)
-                    .setTitle("No Internet")
-                    .setMessage("Please Check Internet Connectavity and try again..")
-                    .setNegativeBtnText("Cancel")
-                    .setPositiveBtnBackground("#FF4081")
-                    .setPositiveBtnText("Ok")
-                    .setNegativeBtnBackground("#FFA9A7A8")
-                    .setGifResource(R.drawable.gif1)   //Pass your Gif here
-                    .isCancellable(true)
-                    .OnPositiveClicked(new FancyGifDialogListener() {
-                        @Override
-                        public void OnClick() {
-                          finish();
-                        }
-                    })
-                    .OnNegativeClicked(new FancyGifDialogListener() {
-                        @Override
-                        public void OnClick() {
-                         finish();
-                        }
-                    })
-                    .build();
-
+    public boolean isNetworkAvaliable(){
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
         }
-        return true;
+        else {
+            connected = false;
+        }
+        return connected;
     }
 
 

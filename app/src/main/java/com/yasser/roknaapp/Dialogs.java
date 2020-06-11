@@ -11,12 +11,12 @@ import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
 import com.yasser.roknaapp.ui.main.MainActivity;
 
 
-public class Dialog {
+public class Dialogs {
 
     Context context;
     ProgressDialog pd;
 
-    public Dialog(Context context) {
+    public Dialogs(Context context) {
         this.context = context;
     }
 

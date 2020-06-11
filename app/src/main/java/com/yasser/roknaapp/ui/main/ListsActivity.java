@@ -8,39 +8,20 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.roger.catloadinglibrary.CatLoadingView;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
 import com.yasser.roknaapp.Adapter.CustomItemClickListener;
 import com.yasser.roknaapp.Adapter.ProductAdapter;
-import com.yasser.roknaapp.Dialog;
+import com.yasser.roknaapp.Dialogs;
 import com.yasser.roknaapp.Loader.ProductsLoader;
 import com.yasser.roknaapp.Model.DatabaseHelper;
-import com.yasser.roknaapp.Model.Event;
 import com.yasser.roknaapp.Model.Product;
-import com.yasser.roknaapp.Model.Workshop;
 import com.yasser.roknaapp.R;
-import com.yasser.roknaapp.Splash;
-import com.yasser.roknaapp.localDatabase.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +37,7 @@ public class ListsActivity extends AppCompatActivity implements LoaderManager.Lo
     Intent getData;
     CatLoadingView mView;
     int product_category_id;
-    Dialog dialog;
+    Dialogs dialogs;
     String colorStr = "";
     MainActivity mainActivity;
     TextView tv_promoCode;
@@ -71,7 +52,7 @@ public class ListsActivity extends AppCompatActivity implements LoaderManager.Lo
         recyclerView = findViewById(R.id.Pr_recyclerView);
         tv_PageTitle = findViewById(R.id.tv_title);
         colorStr = getResources().getString(R.string.greencolor);
-        dialog = new Dialog(ListsActivity.this);
+        dialogs = new Dialogs(ListsActivity.this);
         tv_promoCode = findViewById(R.id.tv_promoCode);
         mainActivity = new MainActivity();
 
@@ -157,7 +138,7 @@ public class ListsActivity extends AppCompatActivity implements LoaderManager.Lo
                 @Override
                 public void onItemClick(View view, int position) {
                     Intent intent = new Intent(ListsActivity.this, ProductDetailsActivity.class);
-                    intent.putExtra("prid", data.get(position).getId());
+                    intent.putExtra("prid", products.get(position).getId());
                     Log.d(TAG, "onItemClick: " + products.get(position).getId());
                     startActivity(intent);
 

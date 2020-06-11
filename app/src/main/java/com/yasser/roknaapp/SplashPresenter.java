@@ -1,9 +1,14 @@
 package com.yasser.roknaapp;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -49,6 +54,7 @@ public class SplashPresenter extends AppCompatActivity {
     static DatabaseManager databaseManager;
     static DatabaseLocal mydb;
     static ProgressDialog Dialog;
+    static Dialog updateDialog;
 
 
 
@@ -92,11 +98,16 @@ public class SplashPresenter extends AppCompatActivity {
     public static void db_request(Context context, final @Nullable DatabaseInterface callbacks) {
         Log.d(TAG, "database is loading");
 
+        updateDialog = new Dialog(context);
+        updateDialog.setContentView(R.layout.updating_dialog);
+        updateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        updateDialog.show();
 
-        Dialog = new ProgressDialog(context);
 
-        Dialog.setMessage("Loading Components");
-        Dialog.show();
+//        Dialog = new ProgressDialog(context);
+//
+//        Dialog.setMessage("Loading Components");
+//        Dialog.show();
         callbacks.onStart();
 
         mydb = DatabaseLocal.getInstance(context);
@@ -340,6 +351,8 @@ public class SplashPresenter extends AppCompatActivity {
 
 
     }
+
+
 
     public static void pause(int ms) {
         try {

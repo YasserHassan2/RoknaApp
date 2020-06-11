@@ -9,7 +9,8 @@
     android:layout_margin="5dp"
     android:layout_marginTop="5dp"
     android:layout_gravity="center"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="5dp"
     app:cardPreventCornerOverlap="true">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,18 +32,19 @@
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"
                 android:layout_margin="@dimen/_15sdp"
-                app:lottie_fileName="updatingdatabase.json"></com.airbnb.lottie.LottieAnimationView>
+                app:lottie_fileName="updatingdatabse.json"></com.airbnb.lottie.LottieAnimationView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_14sdp"
-                android:text="Please wait a seconds..we getting data for you."
+                android:text="Geting data for you..."
                 android:fontFamily="sans-serif-condensed"
                 android:layout_margin="15dp"
                 android:gravity="center"
                 android:textColor="@color/black"
                 ></TextView>
+
 
         </LinearLayout>
 
