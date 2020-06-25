@@ -6,7 +6,10 @@ public class Product {
 
     String id,name,description,price,sale,imgURL1,imgURL2,imgURL3,imgURL4;
     int category_id;
-    public Product(String id, String name, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4) {
+    String avaliable;
+
+
+    public Product(String id, String name, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4, int category_id, String avaliable) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -16,53 +19,23 @@ public class Product {
         this.imgURL2 = imgURL2;
         this.imgURL3 = imgURL3;
         this.imgURL4 = imgURL4;
-    }
-
-    public Product(String id, String name, int category_id, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4) {
-        this.id = id;
-        this.name = name;
         this.category_id = category_id;
-        this.description = description;
-        this.price = price;
-        this.sale = sale;
-        this.imgURL1 = imgURL1;
-        this.imgURL2 = imgURL2;
-        this.imgURL3 = imgURL3;
-        this.imgURL4 = imgURL4;
+        this.avaliable = avaliable;
     }
 
-    public int getCategory_id() {
+    public String isAvaliable() {
+        return avaliable;
+    }
+
+    public void setAvaliable(String avaliable) {
+        this.avaliable = avaliable;
+    }
+   public int getCategory_id() {
         return category_id;
     }
 
     public void setCategory_id(int category_id) {
         this.category_id = category_id;
-    }
-
-    public Product(String name, String description, String price, String sale, String imgURL1, String imgURL2, String imgURL3, String imgURL4) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.sale = sale;
-        this.imgURL1 = imgURL1;
-        this.imgURL2 = imgURL2;
-        this.imgURL3 = imgURL3;
-        this.imgURL4 = imgURL4;
-    }
-
-    public Product(String name, String description, String price, String sale) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.sale = sale;
-    }
-
-    public Product(String id, String name, String description, String price, String sale) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.sale = sale;
     }
 
     public String getId() {

@@ -51,7 +51,8 @@ public class WorkshopActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(@NonNull Loader<List<Workshop>> loader, List<Workshop> data) {
 
-        Log.d("tag", "onLoadFinished: dddd" +  data.get(0).getTitle());
+        Log.d("tag", "onLoadFinished: avaliable value" +  data.get(0).isAvaliable());
+
 
 
         if (workshopAdapter == null) {

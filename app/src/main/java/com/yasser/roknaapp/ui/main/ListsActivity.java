@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 
 import com.roger.catloadinglibrary.CatLoadingView;
@@ -114,10 +116,15 @@ public class ListsActivity extends AppCompatActivity implements LoaderManager.Lo
         List<Product> products = new ArrayList<Product>();
 
 
+
+
         if (RecyclerViewAdapter_loader == null) {
 
 
             for (int i = 0; i < data.size(); i++) {
+                Log.d(TAG, "onLoadFinished: price -->" + data.get(i).getPrice());
+                Log.d(TAG, "onLoadFinished: desc -->" + data.get(i).getDescription());
+                Log.d(TAG, "onLoadFinished: avaliable " + data.get(i).isAvaliable());
 
                 if (data.get(i).getCategory_id() == getData.getIntExtra("cat_id", 0)) {
                     Log.d(TAG, "onLoadFinished: add " + data.get(i).getName());
@@ -134,6 +141,17 @@ public class ListsActivity extends AppCompatActivity implements LoaderManager.Lo
             recyclerView.setLayoutManager(new LinearLayoutManager(ListsActivity.this));
             recyclerView.setAdapter(RecyclerViewAdapter_loader);
             RecyclerViewAdapter_loader.setData(products);
+
+            //recyclerView animation
+            LayoutAnimationController controller = null;
+            controller = AnimationUtils.loadLayoutAnimation(ListsActivity.this, R.anim.layout_fail_down);
+            recyclerView.setAdapter(RecyclerViewAdapter_loader);
+            recyclerView.setLayoutAnimation(controller);
+            recyclerView.getAdapter().notifyDataSetChanged();
+            recyclerView.scheduleLayoutAnimation();
+
+
+
             RecyclerViewAdapter_loader.setOnItemClickListener(new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.yasser.roknaapp.Adapter.CategoriesAdapter;
@@ -64,7 +66,6 @@ public class ProductCategoryActivity extends AppCompatActivity implements Loader
     @Override
     public void onLoadFinished(@NonNull Loader<List<Category>> loader, List<Category> data) {
 
-
         RecyclerViewAdapter = new CategoriesAdapter(this, data);
 
         RecyclerViewAdapter.setData(data);
@@ -72,6 +73,17 @@ public class ProductCategoryActivity extends AppCompatActivity implements Loader
 
         recyclerView.setLayoutManager(new LinearLayoutManager(ProductCategoryActivity.this));
         recyclerView.setAdapter(RecyclerViewAdapter);
+
+
+        //recyclerview animation
+        LayoutAnimationController controller = null;
+        controller = AnimationUtils.loadLayoutAnimation(ProductCategoryActivity.this, R.anim.layout_fail_down);
+
+        recyclerView.setAdapter(RecyclerViewAdapter);
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
 
         RecyclerViewAdapter.setOnItemClickListener(new CustomItemClickListener() {
             @Override

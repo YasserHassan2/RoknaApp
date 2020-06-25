@@ -1,6 +1,7 @@
 package com.yasser.roknaapp.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -140,9 +141,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // Return Image's base 64 code
        // imageViewZoom.getBase64();
-        
-      
-        
+
+        title.setTypeface(ResourcesCompat.getFont(ProductDetailsActivity.this, R.font.jana));
+        description.setTypeface(ResourcesCompat.getFont(ProductDetailsActivity.this, R.font.jana));
+        price.setTypeface(ResourcesCompat.getFont(ProductDetailsActivity.this, R.font.jana));
+
+
+
+
+
 
         intent_getingData = getIntent();
 
@@ -152,7 +159,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         {
 
                         RequestOptions requestOptions = new RequestOptions()
-                                .placeholder(R.drawable.roknalogo);
+                                .placeholder(R.drawable.loading);
 
 
 
@@ -245,7 +252,7 @@ public void selectProdcutByID(String id){
         product.setImgURL2(GroupCursor.getString(7));
         product.setImgURL3(GroupCursor.getString(8));
         product.setImgURL4(GroupCursor.getString(9));
-        product.setCategory_id(Integer.parseInt(GroupCursor.getString(10)));
+        product.setCategory_id(GroupCursor.getInt(10));
     }
 
     } finally {

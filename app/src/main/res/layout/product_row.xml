@@ -25,6 +25,10 @@
         app:cardCornerRadius="15dp"
         android:background="@color/move_3ame2"
         app:cardPreventCornerOverlap="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
 
         <ImageView
             android:id="@+id/pr_image"
@@ -42,9 +46,26 @@
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:visibility="gone"
+            android:layout_alignParentRight="true"
             android:text="50% Sale"
             android:textAllCaps="false"
-            android:textColor="@color/red"></TextView>
+            android:textColor="@color/white"></TextView>
+        <TextView
+            android:id="@+id/prAvaliable"
+            android:layout_width="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/red_bg"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_below="@id/prSale"
+            android:text="50% Sale"
+            android:textSize="@dimen/_9sdp"
+            android:textAllCaps="true"
+            android:textColor="@color/white"></TextView>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -71,7 +92,7 @@
                 android:gravity="center"
                 android:text="عليقه مفاتيح و برواز و مكان للورق"
                 android:textColor="#000000"
-                android:textSize="16dp"></TextView>
+                android:textSize="18dp"></TextView>
 
             <TextView
                 android:id="@+id/prDesc"
@@ -81,7 +102,7 @@
                 android:fontFamily="sans-serif"
                 android:text="عليقه مفاتيح و برواز و مكان للورق"
                 android:textColor="#000000"
-                android:textSize="13dp"></TextView>
+                android:textSize="14dp"></TextView>
 
             <TextView
                 android:id="@+id/prPrice"
@@ -91,6 +112,7 @@
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="150 EGP"
+                android:textStyle="bold"
                 android:textColor="#000000"
                 android:textSize="16dp"></TextView>
         </LinearLayout>

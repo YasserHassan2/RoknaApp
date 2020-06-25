@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.smarteist.autoimageslider.SliderViewAdapter;
@@ -57,6 +59,9 @@ public class SliderAdapterExample extends
         viewHolder.textViewDescription.setText(sliderItem.getAdd_snppit());
         viewHolder.textViewDescription.setTextSize(16);
         viewHolder.textViewDescription.setTextColor(Color.WHITE);
+
+        viewHolder.textViewDescription.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
 
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.roknalogo);

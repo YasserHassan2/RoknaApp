@@ -17,6 +17,8 @@ import com.yasser.roknaapp.Model.Workshop;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 
 public class DatabaseLocal extends SQLiteOpenHelper {
     public Context context;
@@ -60,6 +62,7 @@ public class DatabaseLocal extends SQLiteOpenHelper {
                 "product_img2_url TEXT, " +
                 "product_img3_url TEXT, " +
                 "product_img4_url TEXT, " +
+                "avaliable TEXT, " +
                 "category_id INTEGER)"
         );
 
@@ -82,6 +85,7 @@ public class DatabaseLocal extends SQLiteOpenHelper {
                 "price TEXT, " +
                 "phone TEXT, " +
                 "location_long TEXT, " +
+                "avaliable TEXT, " +
                 "location_lat TEXT)"
         );
         sqLiteDatabase.execSQL("create table  if not exists " + EVENTS +
@@ -90,6 +94,7 @@ public class DatabaseLocal extends SQLiteOpenHelper {
                 "eventDates TEXT, " +
                 "eventImageURL TEXT, " +
                 "eventLocation_long TEXT, " +
+                "avaliable TEXT, " +
                 "eventLocation_lat TEXT)"
         );
 
@@ -120,6 +125,11 @@ public class DatabaseLocal extends SQLiteOpenHelper {
     }
 
     public Boolean insert_products(Context context, Product product) {
+
+        Log.d(TAG, "insert_products: product price " + product.getPrice());
+        Log.d(TAG, "insert_products: product descc" + product.getDescription());
+
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -132,7 +142,9 @@ public class DatabaseLocal extends SQLiteOpenHelper {
         contentValues.put("product_img2_url", product.getImgURL2());
         contentValues.put("product_img3_url", product.getImgURL3());
         contentValues.put("product_img4_url", product.getImgURL4());
+        contentValues.put("avaliable",product.isAvaliable());
         contentValues.put("category_id", product.getCategory_id());
+
 
         long insert = db.insert(PRODUCTS, null, contentValues);
         if (insert == -1) {
@@ -210,6 +222,7 @@ public class DatabaseLocal extends SQLiteOpenHelper {
         contentValues.put("phone", workshop.getPhone());
         contentValues.put("location_long", workshop.getLocation().getLongitude());
         contentValues.put("location_lat", workshop.getLocation().getLatitude());
+        contentValues.put("avaliable",workshop.isAvaliable());
 
 
         long insert = db.insert(WORKSHOPS, null, contentValues);
@@ -237,6 +250,7 @@ public class DatabaseLocal extends SQLiteOpenHelper {
         contentValues.put("eventImageURL", event.getEventImageURL());
         contentValues.put("eventLocation_long", event.getEventLocation().getLongitude());
         contentValues.put("eventLocation_lat", event.getEventLocation().getLatitude());
+        contentValues.put("avaliable",event.isAvaliable());
 
         long insert = db.insert(EVENTS, null, contentValues);
         if (insert == -1) {

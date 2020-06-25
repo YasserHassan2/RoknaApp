@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -61,9 +63,21 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.Recycl
                 .apply(requestOptions)
                 .into(holder.productImage);
 
+        holder.workshopTitle.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.workshopDesc.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.Workshopprice.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.workshopAvaliable.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.btn_location.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.btn_call.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
         holder.workshopTitle.setText(workshopList.get(position).getTitle());
         holder.workshopDesc.setText(workshopList.get(position).getDescription());
-        holder.Workshopprice.setText(workshopList.get(position).getPrice() + " per person");
+        holder.Workshopprice.setText(workshopList.get(position).getPrice() + " EGP per person");
+        if (workshopList.get(position).isAvaliable().equals("false"))
+        {
+            holder.workshopAvaliable.setVisibility(View.VISIBLE);
+            holder.workshopAvaliable.setText("Closed");
+        }
 
     }
     public void setData(List<Workshop> list) {
@@ -88,7 +102,7 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.Recycl
          * this class contains onclick listener for the recylcer view home
          */
 
-        public TextView workshopTitle, workshopDesc, Workshopprice;
+        public TextView workshopTitle, workshopDesc, Workshopprice,workshopAvaliable;
         public ImageView productImage;
         Button btn_location, btn_call;
 
@@ -98,6 +112,7 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.Recycl
             super(itemView);
             workshopTitle = (TextView) itemView.findViewById(R.id.workshop_title);
             workshopDesc = (TextView) itemView.findViewById(R.id.workshopDesc);
+            workshopAvaliable = (TextView) itemView.findViewById(R.id.workshop_Avaliable);
             Workshopprice = (TextView) itemView.findViewById(R.id.workshopPrice);
             productImage = (ImageView) itemView.findViewById(R.id.workshop_image);
             btn_call = itemView.findViewById(R.id.btn_booknow);

@@ -30,7 +30,7 @@ public class CategoriesLoader extends AbstractQueryLoader<List<Category>> {
 
         try {
 
-            GroupCursor = db.rawQuery("SELECT * FROM categories ", null);
+            GroupCursor = db.rawQuery("SELECT * FROM categories ORDER BY id DESC", null);
 
             if (GroupCursor != null && GroupCursor.moveToFirst()) {
                 results = new ArrayList<>();

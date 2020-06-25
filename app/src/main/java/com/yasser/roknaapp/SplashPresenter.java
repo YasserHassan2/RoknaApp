@@ -101,6 +101,7 @@ public class SplashPresenter extends AppCompatActivity {
         updateDialog = new Dialog(context);
         updateDialog.setContentView(R.layout.updating_dialog);
         updateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        updateDialog.setCancelable(false);
         updateDialog.show();
 
 
@@ -137,6 +138,8 @@ public class SplashPresenter extends AppCompatActivity {
                             String prPrice = o.getString("price");
                             String prSale = o.getString("sale");
                             int category_id = o.getInt("category_id");
+                            String avaliable = String.valueOf(o.getBoolean("avaliable"));
+
 
                             ParseFile imageFile1 = o.getParseFile("image");
                             String imageURL1 = imageFile1.getUrl();
@@ -148,23 +151,32 @@ public class SplashPresenter extends AppCompatActivity {
                             String imageURL4 = imageFile4.getUrl();
 
 
-                            Product product = new Product(pr_id, prName, category_id, prDesc, prPrice, prSale, imageURL1, imageURL2, imageURL3, imageURL4);
+
+                            Product product = new Product(pr_id,prName,prDesc,prPrice,prSale,imageURL1,imageURL2,imageURL3,imageURL4,category_id,avaliable);
                             productList.add(product);
 
                         }
                         for (int i = 0; i < productList.size(); i++) {
                             Log.d(TAG, "run: " + productList.get(i).getName());
-                            mydb.insert_products(context, new Product(
+
+                            Log.d(TAG, "done: desc ------>" + productList.get(i).getDescription());
+                            Log.d(TAG, "done: price ------>" + productList.get(i).getPrice());
+
+
+                            mydb.insert_products(context,new Product(
                                     productList.get(i).getId(),
                                     productList.get(i).getName(),
-                                    productList.get(i).getCategory_id(),
                                     productList.get(i).getDescription(),
                                     productList.get(i).getPrice(),
                                     productList.get(i).getSale(),
                                     productList.get(i).getImgURL1(),
                                     productList.get(i).getImgURL2(),
                                     productList.get(i).getImgURL3(),
-                                    productList.get(i).getImgURL4()));
+                                    productList.get(i).getImgURL4(),
+                                    productList.get(i).getCategory_id(),
+                                    productList.get(i).isAvaliable()
+                            ));
+
 
 
                         }
@@ -254,26 +266,28 @@ public class SplashPresenter extends AppCompatActivity {
                             String workshopPrice = o.getString("price");
                             String phonNumber = o.getString("phone_number");
                             ParseGeoPoint location = o.getParseGeoPoint("location");
+                            String avaliable = String.valueOf(o.getBoolean("avaliable"));
 
                             ParseFile imageFile = o.getParseFile("image");
                             String imageURL = imageFile.getUrl();
 
 
-                            Workshop workshop = new Workshop(imageURL, workshopName, workshopDesc, workshopPrice, phonNumber, location);
+                            Workshop workshop = new Workshop(imageURL, workshopName, workshopDesc, workshopPrice, phonNumber, location,avaliable);
                             workshopsList.add(workshop);
 
                         }
 
                         for (int i = 0; i < workshopsList.size(); i++) {
                             Log.d(TAG, "run: inserting workshops data");
-                            Log.d(TAG, "run: " + workshopsList.get(i).getTitle());
+                            Log.d(TAG, "run: " + workshopsList.get(i).isAvaliable());
                             mydb.insert_workshops(new Workshop(
                                     workshopsList.get(i).getImageURL(),
                                     workshopsList.get(i).getTitle(),
                                     workshopsList.get(i).getDescription(),
                                     workshopsList.get(i).getPrice(),
                                     workshopsList.get(i).getPhone(),
-                                    workshopsList.get(i).getLocation()
+                                    workshopsList.get(i).getLocation(),
+                                    workshopsList.get(i).isAvaliable()
                             ));
 
 
@@ -297,12 +311,13 @@ public class SplashPresenter extends AppCompatActivity {
                             String eventTitle = o.getString("title");
                             String eventDates = o.getString("dates");
                             ParseGeoPoint location = o.getParseGeoPoint("location");
+                            String avaliable = String.valueOf(o.getBoolean("avaliable"));
 
                             ParseFile imageFile = o.getParseFile("image");
                             String imageURL = imageFile.getUrl();
 
 
-                            Event event = new Event(eventTitle, eventDates, imageURL, location);
+                            Event event = new Event(eventTitle, eventDates, imageURL, location,avaliable);
                             eventList.add(event);
 
                         }
@@ -315,7 +330,8 @@ public class SplashPresenter extends AppCompatActivity {
                                     eventList.get(i).getEventTitle(),
                                     eventList.get(i).getEventDates(),
                                     eventList.get(i).getEventImageURL(),
-                                    eventList.get(i).getEventLocation()));
+                                    eventList.get(i).getEventLocation(),
+                                    eventList.get(i).isAvaliable()));
 
 
                         }

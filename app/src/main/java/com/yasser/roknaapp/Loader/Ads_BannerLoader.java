@@ -31,7 +31,7 @@ public class Ads_BannerLoader extends AbstractQueryLoader<List<AdBanner>> {
 
         try {
 
-            GroupCursor = db.rawQuery("SELECT * FROM ads_banner ", null);
+            GroupCursor = db.rawQuery("SELECT * FROM ads_banner ORDER BY id DESC ", null);
 
             if (GroupCursor != null && GroupCursor.moveToFirst()) {
                 results = new ArrayList<>();

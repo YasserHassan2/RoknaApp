@@ -6,21 +6,27 @@ public class Workshop {
 
     String imageURL,title,description,price,phone;
     ParseGeoPoint location;
-    public Workshop(String imageURL, String title, String description, String price) {
-        this.imageURL = imageURL;
-        this.title = title;
-        this.description = description;
-        this.price = price;
-    }
+    String avaliable;
 
-    public Workshop(String imageURL, String title, String description, String price, String phone, ParseGeoPoint location) {
+
+    public Workshop(String imageURL, String title, String description, String price, String phone, ParseGeoPoint location, String avaliable) {
         this.imageURL = imageURL;
         this.title = title;
         this.description = description;
         this.price = price;
         this.phone = phone;
         this.location = location;
+        this.avaliable = avaliable;
     }
+
+    public String isAvaliable() {
+        return avaliable;
+    }
+
+    public void setAvaliable(String avaliable) {
+        this.avaliable = avaliable;
+    }
+
 
     public Workshop() {
     }

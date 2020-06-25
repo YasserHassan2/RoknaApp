@@ -31,7 +31,7 @@ public class EventsLoader  extends AbstractQueryLoader<List<Event>> {
 
         try {
 
-            GroupCursor = db.rawQuery("SELECT * FROM events ", null);
+            GroupCursor = db.rawQuery("SELECT * FROM events ORDER BY id DESC", null);
 
             if (GroupCursor != null && GroupCursor.moveToFirst()) {
                 results = new ArrayList<>();
@@ -40,7 +40,8 @@ public class EventsLoader  extends AbstractQueryLoader<List<Event>> {
                     list.setEventTitle(GroupCursor.getString(1));
                     list.setEventDates(GroupCursor.getString(2));
                     list.setEventImageURL(GroupCursor.getString(3));
-                    list.setEventLocation(new ParseGeoPoint(Double.parseDouble(GroupCursor.getString(5)),Double.parseDouble(GroupCursor.getString(4))));
+                    list.setAvaliable(GroupCursor.getString(5));
+                    list.setEventLocation(new ParseGeoPoint(Double.parseDouble(GroupCursor.getString(4)),Double.parseDouble(GroupCursor.getString(6))));
                     results.add(list);
 
                 } while (GroupCursor.moveToNext());

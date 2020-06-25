@@ -81,12 +81,13 @@ public class DatabaseHelper {
                         String workshopPrice = o.getString("price");
                         String phonNumber = o.getString("phone_number");
                         ParseGeoPoint location = o.getParseGeoPoint("location");
+                        String avaliable = String.valueOf(o.getBoolean("avaliable"));
 
                         ParseFile imageFile = o.getParseFile("image");
                         String imageURL = imageFile.getUrl();
 
 
-                        Workshop workshop = new Workshop(imageURL, workshopName, workshopDesc, workshopPrice, phonNumber, location);
+                        Workshop workshop = new Workshop(imageURL, workshopName, workshopDesc, workshopPrice, phonNumber, location,avaliable);
                         workshopsList.add(workshop);
 
                     }
@@ -136,12 +137,13 @@ public class DatabaseHelper {
                         String eventTitle = o.getString("title");
                         String eventDates = o.getString("dates");
                         ParseGeoPoint location = o.getParseGeoPoint("location");
+                        String avaliable = String.valueOf(o.getBoolean("avaliable"));
 
                         ParseFile imageFile = o.getParseFile("image");
                         String imageURL = imageFile.getUrl();
 
 
-                        Event event = new Event(eventTitle,eventDates,imageURL,location);
+                        Event event = new Event(eventTitle,eventDates,imageURL,location,avaliable);
                         eventList.add(event);
 
                     }

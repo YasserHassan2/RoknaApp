@@ -5,17 +5,28 @@ import com.parse.ParseGeoPoint;
 public class Event {
     String eventTitle,eventDates,eventImageURL;
     ParseGeoPoint eventLocation;
+    String avaliable;
+
+
 
     public Event() {
     }
 
-    public Event(String eventTitle, String eventDates, String eventImageURL, ParseGeoPoint eventLocation) {
+    public String isAvaliable() {
+        return avaliable;
+    }
+
+    public Event(String eventTitle, String eventDates, String eventImageURL, ParseGeoPoint eventLocation, String avaliable) {
         this.eventTitle = eventTitle;
         this.eventDates = eventDates;
         this.eventImageURL = eventImageURL;
         this.eventLocation = eventLocation;
+        this.avaliable = avaliable;
     }
 
+    public void setAvaliable(String avaliable) {
+        this.avaliable = avaliable;
+    }
     public String getEventTitle() {
         return eventTitle;
     }

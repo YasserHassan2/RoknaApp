@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
     TextView tv_promoCode;
     public static int promoCode;
     boolean doubleBackToExitPressedOnce = false;
-
+    TextView tv_products,tv_workshops,tv_events;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,15 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         cvEvents = findViewById(R.id.cv_Events);
         cvAbout_us = findViewById(R.id.cv_aboutUs);
         tv_promoCode = findViewById(R.id.tv_promoCode);
+
+        tv_products = findViewById(R.id.tv_products);
+        tv_events = findViewById(R.id.tv_events);
+        tv_workshops = findViewById(R.id.tv_workshops);
+
+        tv_products.setTypeface(ResourcesCompat.getFont(MainActivity.this, R.font.jana));
+        tv_events.setTypeface(ResourcesCompat.getFont(MainActivity.this, R.font.jana));
+        tv_workshops.setTypeface(ResourcesCompat.getFont(MainActivity.this, R.font.jana));
+
         getSupportLoaderManager().initLoader(0, null, this);
 
        promoCode = getPromoIntent.getIntExtra("promo_code",-1);

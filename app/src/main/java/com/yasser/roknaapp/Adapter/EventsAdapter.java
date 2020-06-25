@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -59,8 +60,20 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
                 .apply(requestOptions)
                 .into(holder.eventImage);
 
+        holder.tv_eventTitle.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.tv_eventDates.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.tv_eventAvlaiable.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.btn_location.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
         holder.tv_eventTitle.setText(eventList.get(position).getEventTitle());
         holder.tv_eventDates.setText(eventList.get(position).getEventDates());
+
+        if (eventList.get(position).isAvaliable().equals("false"))
+        {
+            holder.tv_eventAvlaiable.setVisibility(View.VISIBLE);
+            holder.tv_eventAvlaiable.setText("Finished");
+        }
+
 
     }
 
@@ -83,7 +96,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
     public class EventsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView eventImage;
-        TextView tv_eventTitle,tv_eventDates;
+        TextView tv_eventTitle,tv_eventDates,tv_eventAvlaiable;
         Button btn_location;
         public int position = 0;
         /**
@@ -96,6 +109,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsView
            tv_eventTitle = itemView.findViewById(R.id.eventTitle);
            tv_eventDates = itemView.findViewById(R.id.tv_eventDates);
            btn_location = itemView.findViewById(R.id.btn_Event_location);
+           tv_eventAvlaiable = itemView.findViewById(R.id.event_Avaliable);
+
 
 
             btn_location.setOnClickListener(new View.OnClickListener() {

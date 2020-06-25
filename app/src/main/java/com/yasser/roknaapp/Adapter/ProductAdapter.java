@@ -1,12 +1,14 @@
 package com.yasser.roknaapp.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -55,8 +57,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
                 .into(holder.productImage);
 
         holder.productName.setText(productList.get(position).getName());
+        holder.productName.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
+
         holder.productDesc.setText(productList.get(position).getDescription());
+        holder.productDesc.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
+
         holder.productprice.setText(productList.get(position).getPrice()+" EGP");
+        holder.productprice.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
+
+        holder.productSale.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+        holder.productAvaliable.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
+
+        if (productList.get(position).isAvaliable().equals("false"))
+        {
+            holder.productAvaliable.setVisibility(View.VISIBLE);
+            holder.productAvaliable.setText("Solid out");
+        }
+
+        if (productList.get(position).getSale() != null)
+        {
+            holder.productSale.setVisibility(View.VISIBLE);
+            holder.productSale.setText(productList.get(position).getSale() + "% SALE");
+        }
 
     }
 
@@ -82,7 +107,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
          * this class contains onclick listener for the recylcer view home
          */
 
-        public TextView productName, productDesc, productprice, productSale;
+        public TextView productName, productDesc, productprice, productSale,productAvaliable;
         public ImageView productImage;
         public int position = 0;
 
@@ -93,6 +118,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
             productprice = (TextView) itemView.findViewById(R.id.prPrice);
             productSale = (TextView) itemView.findViewById(R.id.prSale);
             productImage = (ImageView) itemView.findViewById(R.id.pr_image);
+            productAvaliable = itemView.findViewById(R.id.prAvaliable);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

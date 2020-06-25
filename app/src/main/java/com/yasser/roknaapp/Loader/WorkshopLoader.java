@@ -31,7 +31,7 @@ public class WorkshopLoader extends AbstractQueryLoader<List<Workshop>> {
 
         try {
 
-            GroupCursor = db.rawQuery("SELECT * FROM workshops ", null);
+            GroupCursor = db.rawQuery("SELECT * FROM workshops ORDER BY id DESC", null);
 
             if (GroupCursor != null && GroupCursor.moveToFirst()) {
                 results = new ArrayList<>();
@@ -42,7 +42,9 @@ public class WorkshopLoader extends AbstractQueryLoader<List<Workshop>> {
                     list.setDescription(GroupCursor.getString(3));
                     list.setPrice(GroupCursor.getString(4));
                     list.setPhone(GroupCursor.getString(5));
-                    list.setLocation(new ParseGeoPoint(Double.parseDouble(GroupCursor.getString(7)),Double.parseDouble(GroupCursor.getString(6))));
+                    list.setAvaliable(GroupCursor.getString(7));
+                    list.setLocation(new ParseGeoPoint(Double.parseDouble(GroupCursor.getString(6)),Double.parseDouble(GroupCursor.getString(8))));
+
                     results.add(list);
 
                 } while (GroupCursor.moveToNext());

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -82,6 +83,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Re
         public RecyclerViewHolders(View itemView) {
             super(itemView);
             CategoryName = (TextView) itemView.findViewById(R.id.cat_title);
+            CategoryName.setTypeface(ResourcesCompat.getFont(context, R.font.jana));
 
 
 
