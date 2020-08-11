@@ -7,44 +7,29 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialog;
-import com.shashank.sony.fancygifdialoglib.FancyGifDialogListener;
-import com.stfalcon.imageviewer.StfalconImageViewer;
+
 import com.yasser.roknaapp.Model.DatabaseHelper;
 import com.yasser.roknaapp.Model.Product;
 import com.yasser.roknaapp.R;
+import com.yasser.roknaapp.Remote.JavaMailAPI;
 import com.yasser.roknaapp.localDatabase.DatabaseLocal;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import br.com.felix.imagezoom.ImageZoom;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ozaydin.serkan.com.image_zoom_view.ImageViewZoom;
-import ozaydin.serkan.com.image_zoom_view.ImageViewZoomConfig;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -92,6 +77,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_orderNow: {
+
+                JavaMailAPI sm = new JavaMailAPI(this, "yasserhassan.it.95@gmail.com", "RoknaApp- ORDER OCCURED", "User Order "+ prName
+                + " \nWith Price " + prPrice + " \nTo Address : 40 شارع محمود حب الله");
+                sm.execute();
 //                new FancyGifDialog.Builder(ProductDetailsActivity.this)
 //                                    .setTitle("Contact To Order")
 //                                    .setMessage("Want '"+prName+"' , please Contact to deliver")
@@ -262,5 +251,6 @@ public void selectProdcutByID(String id){
 
     }
 }
+
 
 }

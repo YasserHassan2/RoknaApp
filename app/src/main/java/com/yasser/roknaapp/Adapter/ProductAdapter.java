@@ -49,7 +49,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Recycler
     public void onBindViewHolder(RecyclerViewHolders holder, int position) {
 
         RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.roknalogo);
+                .placeholder(R.drawable.loading);
 
         Glide.with(context)
                 .load(productList.get(position).getImgURL1())

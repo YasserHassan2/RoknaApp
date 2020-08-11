@@ -83,6 +83,11 @@ dependencies {
     
     //lottie anmation
     implementation 'com.airbnb.android:lottie:3.4.0'
+    
+    //background mail
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/mail.jar')
 
 
 }

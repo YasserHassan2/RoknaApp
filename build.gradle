@@ -19,6 +19,8 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+        maven { url "https://maven.java.net/content/groups/public/" }
         
     }
 }
